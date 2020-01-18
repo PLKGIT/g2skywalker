@@ -46,7 +46,7 @@
                             <div class="card-body text-left">
                                 <h5 class="card-title"></h5>
                                 <p class="card-text">
-                                    <form>
+                                    <form id="user-input">
                                         <div class="form-group text-primary">
                                             <label for="userName">Your First Name</label>
                                             <input type="text" class="form-control border border-primary" id="userName"
@@ -57,7 +57,7 @@
                                             <input type="text" class="form-control border border-primary" id="datepicker" required>
                                         </div>
                                         <div class="form-group text-primary">
-                                            <label for="userPlace">City or Zip</label>
+                                            <label for="userPlace">Zipcode</label>
                                             <input type="text" class="form-control border border-primary" id="userPlace" required>
                                         </div>
                                         <div class="form-group text-primary">
@@ -89,15 +89,15 @@
                                         </div>
                                         <div class="form-group text-primary">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="vegan">
-                                                <label class="form-check-label" for="vegan">
-                                                    Need a Vegan Meal
+                                                <input class="form-check-input" type="checkbox" value="" id="needMOvies">
+                                                <label class="form-check-label" for="needMovies">
+                                                    Need Nearby Movies
                                                 </label>
                                             </div>
                                         </div>
                                         <br>
                                         <a href="#" title="Click here for info"><button type="submit"
-                                                class="btn btn-lg btn-block bg-primary text-white">Submit</button></a>
+                                                class="btn btn-lg btn-block bg-primary text-white" id="submit">Submit</button></a>
                                     </form>
                                 </p>
                             </div>
@@ -108,7 +108,7 @@
                     <div id="userResults" class="container">
                         <div class="card bg-white">
                             <div class="card-header text-primary">
-                                <h5>Here are your results <span id="dater">______</span></h5>
+                                <h5>Here are your results <span id="dater">"userName"!</span></h5>
                             </div>
                             <div class="card-body">
                                 <h5 class="card-title"></h5>
@@ -177,10 +177,15 @@
 
     
     <script>
+
+        // This uses the jQuery UI library to create an accordion effect for user results
         $("#accordion").accordion();
+
+        // This uses the jQuery UI library to allow user to select a date from an actual calendar in the form
         $(function () {
             $("#datepicker").datepicker();
         });
+        // This uses the jQuery UI library to use Tooltips in the UI
         $(function () {
             $(document).tooltip();
         });
