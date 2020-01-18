@@ -1,5 +1,47 @@
 /*  CSS for Project 1*/
 
+
 * {
-    box-sizing: border-box;
-  }
+  box-sizing: border-box;
+}
+
+body {
+  background-image: url(../images/fireworks-180553_1920.jpg);
+  background-repeat: no-repeat;
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+}
+h1 {
+  font-size: 42px;
+}
+
+.container {
+  padding: 75px 0;
+  margin: 0 auto;
+}
+header {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  color: white;
+  text-align: center;
+  background: rgba(50, 7, 238, 0.5);
+  padding: 1em 0;
+  text-shadow: 2px 2px 4px #000000;
+  margin-bottom: 50px;
+}
+
+footer{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  color: white;
+  text-align: center;
+  background: rgba(50, 7, 238, 0.5);
+  text-shadow: 2px 2px 4px #000000;
+  padding-top: .5em;
+}
