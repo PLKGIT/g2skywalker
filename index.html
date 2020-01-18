@@ -8,23 +8,182 @@
     <title>Date Night Planner</title>
 
     <!--Google Fonts-->
-    <link rel="stylesheet" type="text/css"
-        href="https://fonts.googleapis.com/css?family=Lora:400i|Roboto&display=swap&subset=latin-ext">
+    <link href="https://fonts.googleapis.com/css?family=Muli|Roboto&display=swap" rel="stylesheet">
     <!--Meyerweb CSS Reset-->
     <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
-    <!--Bootstrap CSS-->
+    <!--Bootstrap CSS Reset-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!--jQuery UI CSS-->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <!--My CSS-->
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <!--jQuery-->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!--Moment JS-->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/moment.min.js" type="text/javascript"></script>
     <!--Firebase-->
     <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
-
+    <!--JS-->
+    <link type="text/javascript" href="assets/javascript/app.js">
 </head>
 
 <body>
-This is the home page for Group2's project 1.
+    <header>
+        <h1>Date Night Planner</h1>
+    </header>
+    <div class="container text-center">
+        <main>
+            <div class="row">
+                <div class="col-3">
+                    <div id="userInput" class="container">
+                        <div class="card bg-white">
+                            <div class="card-header text-primary">
+                                <h5>Give Us the Details!</h5>
+                            </div>
+                            <div class="card-body text-left">
+                                <h5 class="card-title"></h5>
+                                <p class="card-text">
+                                    <form>
+                                        <div class="form-group text-primary">
+                                            <label for="userName">Your First Name</label>
+                                            <input type="text" class="form-control border border-primary" id="userName"
+                                                placeholder="John/Jane" required>
+                                        </div>
+                                        <div class="form-group text-primary">
+                                            <label for="userDate">Date of Your Date</label>
+                                            <input type="text" class="form-control border border-primary" id="datepicker" required>
+                                        </div>
+                                        <div class="form-group text-primary">
+                                            <label for="userPlace">City or Zip</label>
+                                            <input type="text" class="form-control border border-primary" id="userPlace" required>
+                                        </div>
+                                        <div class="form-group text-primary">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value=""
+                                                    id="needRestaurant">
+                                                <label class="form-check-label" for="needRestaurant">
+                                                    Need a Restaurant
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group text-primary">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value=""
+                                                    id="needDessert">
+                                                <label class="form-check-label" for="needDessert">
+                                                    Need a Dessert Place
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group text-primary">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value=""
+                                                    id="needAttractions">
+                                                <label class="form-check-label" for="needAttractions">
+                                                    Need Attractions
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group text-primary">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="vegan">
+                                                <label class="form-check-label" for="vegan">
+                                                    Need a Vegan Meal
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <a href="#" title="Click here for info"><button type="submit"
+                                                class="btn btn-lg btn-block bg-primary text-white">Submit</button></a>
+                                    </form>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div id="userResults" class="container">
+                        <div class="card bg-white">
+                            <div class="card-header text-primary">
+                                <h5>Here are your results <span id="dater">______</span></h5>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title"></h5>
+                                <p class="card-text">
+                                    <div id="accordion">
+                                        <h3>Top Rated Restaurants</h3>
+                                        <div id="restaurants">
+                                        </div>
+                                        <h3>Top Rated Dessert Spots</h3>
+                                        <div id="desserts">
+                                        </div>
+                                        <h3>Weather</h3>
+                                        <div id="weather">
+                                        </div>
+                                        <h3>Local Attractions</h3>
+                                        <div id="attractions">
+                                        </div>
+                                    </div>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div id="userInput" class="container">
+                        <div class="card bg-white">
+                            <div class="card-header text-primary">
+                                <h5>Dating Aids</h5>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title"></h5>
+                                <p class="card-text text-primary">
+                                    <div class="row">
+                                        <div class="col-12 text-primary">
+                                            <h5>Conversation Starters</h5>
+                                            <button type="button" id="history"
+                                                class="btn btn-info btn-lg btn-block">Date in History</button>
+                                            <button type="button" id="movies"
+                                                class="btn btn-info btn-lg btn-block">Movie Reviews</button>
+                                            <button type="button" id="books" class="btn btn-info btn-lg btn-block">Book
+                                                Reviews</button>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-12 text-primary">
+                                            <h5>A Little Nervous?</h5>
+                                            <button type="button" id="jokes"
+                                                class="btn btn-dark btn-lg btn-block">Joke of the Day</button>
+                                            <button type="button" id="quotes"
+                                                class="btn btn-dark btn-lg btn-block">Inspirational
+                                                Quotes</button>
+                                        </div>
+                                    </div>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <footer>
+        <h6>&copy; Copyright 2020</h6>
+    </footer>
+
+    <script>
+        $("#accordion").accordion();
+        $(function () {
+            $("#datepicker").datepicker();
+        });
+        $(function () {
+            $(document).tooltip();
+        });
+    </script>
 </body>
 
 </html>
