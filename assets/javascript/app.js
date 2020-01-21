@@ -86,15 +86,15 @@ $(document).ready(function () {
         console.log("---Selected Date---");
         console.log(userDate);
 
-        dateMonth = userDate.substr(0,2);
+        dateMonth = userDate.substr(0, 2);
         console.log("---Selected Month---");
         console.log(dateMonth);
 
-        dateDay = userDate.substr(2,2);
+        dateDay = userDate.substr(2, 2);
         console.log("---Selected Day---");
         console.log(dateDay);
 
-        dateYear = userDate.substr(4,4);
+        dateYear = userDate.substr(4, 4);
         console.log("---Selected Year---");
         console.log(dateYear);
 
@@ -142,7 +142,9 @@ $(document).ready(function () {
         // Call Weather Function 
         //-----------TO DO--------------
 
-        
+        weather();
+        forecast();
+
         //this will update movies in UI
         updateMovies(needMovies);
 
@@ -151,58 +153,203 @@ $(document).ready(function () {
     // Get Results Data
     //-------------------------------------------
     //-------------------------------------------
-    
+
     // Weather API Data
     //-------------------------------------------
     // --------------TO DO------------------   
-        // Pull and store data
-        // Cycle through the optional checkboxes (restaurants, dessert, movies, attractions)
-        // Call the appropriate function
+    // Pull and store data
+    // Cycle through the optional checkboxes (restaurants, dessert, movies, attractions)
+    // Call the appropriate function
+
+
+    function weather() {
+
+        var weatherAPIKey = "166a433c57516f51dfab1f7edaed8413";
+        var weatherQueryURL = "https://api.openweathermap.org/data/2.5/weather?" +
+            "zip=" + userPlace + "&appid=" + weatherAPIKey;
+
+        $.ajax({
+            url: weatherQueryURL,
+            method: "GET"
+        })
+
+            .then(function (response) {
+
+                // Log the resulting object
+
+                console.log(response);
+
+                var windy = "";
+                var cloudy = "";
+
+                if (response.wind.speed < 11) {
+                    windy = "light breeze";
+                }
+
+                if (response.wind.speed > 10 && response.wind.speed < 39) {
+                    windy = "moderate wind";
+                }
+
+                if (response.wind.speed > 38 && response.wind.speed < 62) {
+                    windy = "strong wind";
+                }
+
+                if (response.wind.speed > 61 && response.wind.speed < 103) {
+                    windy = "very strong wind";
+                }
+
+                if (response.wind.speed > 102) {
+                    windy = "hurricane";
+                }
+
+                if (response.clouds.all < 11) {
+                    cloudy = "sunny";
+                }
+                if (response.clouds.all > 10 && response.clouds.all < 26) {
+                    cloudy = "slightly cloudy";
+                }
+
+                if (response.clouds.all > 25 && response.clouds.all < 51) {
+                    cloudy = "partly cloudy";
+                }
+
+                if (response.clouds.all > 52 && response.clouds.all < 76) {
+                    cloudy = "very cloudy";
+                }
+
+                if (response.clouds.all > 75) {
+                    cloudy = "overcast";
+                }
+
+                // Transfer content to HTML for current weather information 
+                var temp = (response.main.temp - 273.15) * 1.80 + 32;
+                var highTemp = (response.main.temp_max - 273.15) * 1.80 + 32;
+                var lowTemp = (response.main.temp_min - 273.15) * 1.80 + 32;
+
+                $("#weather").html("<h1>" + response.name + "</h1><br>Current Temperature: " + temp.toFixed(2) + "<br>High: " + highTemp.toFixed(2) + "<br>Low: " + lowTemp.toFixed(2) + "<br>" + cloudy + "<br>" + windy);
+
+            });
+
+    }
+
+    function forecast() {
+        var forecastAPIKey = "166a433c57516f51dfab1f7edaed8413";
+        var forecastQueryURL = "https://api.openweathermap.org/data/2.5/forecast?" +
+            "zip=" + userPlace + "&appid=" + forecastAPIKey;
+
+        $.ajax({
+            url: forecastQueryURL,
+            method: "GET"
+        })
+
+            .then(function (response) {
+
+                var hours = [7, 15, 23, 31, 39];
+                var days = [1, 2, 3, 4, 5];
+
+                var windy = "";
+                var cloudy = "";
+
+                function wind(i) {
+                    if (response.list[i].wind.speed < 11) {
+                        windy = "light breeze";
+                    }
+
+                    if (response.list[i].wind.speed > 10 && response.list[i].wind.speed < 39) {
+                        windy = "moderate wind";
+                    }
+
+                    if (response.list[i].wind.speed > 38 && response.list[i].wind.speed < 62) {
+                        windy = "strong wind";
+                    }
+
+                    if (response.list[i].wind.speed > 61 && response.list[i].wind.speed < 103) {
+                        windy = "very strong wind";
+                    }
+
+                    if (response.list[i].wind.speed > 102) {
+                        windy = "hurricane";
+                    }
+
+                }
+
+                function cloud(i) {
+                    if (response.list[i].clouds.all < 11) {
+                        cloudy = "sunny";
+                    }
+                    if (response.list[i].clouds.all > 10 && response.list[i].clouds.all < 26) {
+                        cloudy = "slightly cloudy";
+                    }
+
+                    if (response.list[i].clouds.all > 25 && response.list[i].clouds.all < 51) {
+                        cloudy = "partly cloudy";
+                    }
+
+                    if (response.list[i].clouds.all > 52 && response.list[i].clouds.all < 76) {
+                        cloudy = "very cloudy";
+                    }
+
+                    if (response.list[i].clouds.all > 75) {
+                        cloudy = "overcast";
+                    }
+
+                }
+
+                for (i = 0; i < hours.length; i++) {
+                    var temp = (response.list[hours[i]].main.temp - 273.15) * 1.80 + 32;
+                    wind(hours[i]);
+                    cloud(hours[i])
+                    $("#forecast").append("<br><h5>" + response.city.name + " Day " + i + "</h5><br>Temperature: " + temp.toFixed(2) + "<br>" + windy + "<br>" + cloudy + "<br>");
+                }
+
+            });
+
+    }
 
     // Restaurants API Data
     //-------------------------------------------
     // --------------TO DO------------------   
-        // Pull and store data 
-        // Cycle through the remaining optional checkboxes (dessert, movies, attractions)
-        // Call the appropriate function
-        // If none checked, call the Return Results function
+    // Pull and store data 
+    // Cycle through the remaining optional checkboxes (dessert, movies, attractions)
+    // Call the appropriate function
+    // If none checked, call the Return Results function
 
     // Dessert Spots API Data
     //-------------------------------------------
     // --------------TO DO------------------     
-        // Pull and store data 
-        // Cycle through the remaining optional checkboxes (movies and attractions)
-        // Call the appropriate function
-        // If neither checked, call the Return Results function
+    // Pull and store data 
+    // Cycle through the remaining optional checkboxes (movies and attractions)
+    // Call the appropriate function
+    // If neither checked, call the Return Results function
 
     // Movies API Data
     //-------------------------------------------
     // --------------TO DO------------------   
-        // Pull and store data 
-        // Check if Attractions was checked, if so call Attractions function
-        // If not, call the Return Results function
-        function updateMovies(needMovies) {
-            if (needMovies) {
-                var result;
-                for (var i = 0; i < resultsMovies.length; i++) {
-                    //$("#movies").html("<h5>" + resultsMovies[i].title + " title of movie</h5>")
-                    //$("#movies").html("<h5 id = 'h" + i + "'" + ">" + resultsMovies[i].title + " title of movie</h5>")
-                    // console.log("-----------test--------");
-                    //----just for testing---- UI will be updated later---
-                    let r = resultsMovies[i].title;
-                    result = result + r;
-    
-                    $("#movies").html("<h5 id = 'h" + i + "'" + ">" + result + " title of movie</h5>")
-    
-                }
+    // Pull and store data 
+    // Check if Attractions was checked, if so call Attractions function
+    // If not, call the Return Results function
+    function updateMovies(needMovies) {
+        if (needMovies) {
+            var result;
+            for (var i = 0; i < resultsMovies.length; i++) {
+                //$("#movies").html("<h5>" + resultsMovies[i].title + " title of movie</h5>")
+                //$("#movies").html("<h5 id = 'h" + i + "'" + ">" + resultsMovies[i].title + " title of movie</h5>")
+                // console.log("-----------test--------");
+                //----just for testing---- UI will be updated later---
+                let r = resultsMovies[i].title;
+                result = result + r;
+
+                $("#movies").html("<h5 id = 'h" + i + "'" + ">" + result + " title of movie</h5>")
+
             }
         }
+    }
 
     // Attractions API Data
     //-------------------------------------------
     // --------------TO DO------------------      
-        // Pull and store data 
-        // Call Return Results function
+    // Pull and store data 
+    // Call Return Results function
 
 
     // Return Results Data to DOM/Email
@@ -216,8 +363,8 @@ $(document).ready(function () {
     //-------------------------------------------
     // --------------TO DO------------------   
 
-        $("#userResults").show();
-        $("#userHelp").show();
+    $("#userResults").show();
+    $("#userHelp").show();
 
 
     // Function to Email?  If so, need user's email address
@@ -237,29 +384,29 @@ $(document).ready(function () {
     // AJAX Call when Day In History Button Clicked
     $("#history").on("click", function (event) {
 
-    // Preventing the submit button from trying to submit the form
-    // We're optionally using a form so the user may hit Enter to search instead of clicking the button
+        // Preventing the submit button from trying to submit the form
+        // We're optionally using a form so the user may hit Enter to search instead of clicking the button
         event.preventDefault();
 
-    // Construct API URL with date supplied by user
-    var queryURL = "https://byabbe.se/on-this-day/" + dateMonth.replace(/^0+/, '') + "/" + dateDay.replace(/^0+/, '') + "/events.json";
+        // Construct API URL with date supplied by user
+        var queryURL = "https://byabbe.se/on-this-day/" + dateMonth.replace(/^0+/, '') + "/" + dateDay.replace(/^0+/, '') + "/events.json";
 
-    // Query the data from the API
+        // Query the data from the API
 
-    $.ajax({
-    url: queryURL,
-    method: "GET"
-    }).then(function(response) {
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+        }).then(function (response) {
 
-    // Console Log Results from API
-    console.log(queryURL);
-    console.log(response);
+            // Console Log Results from API
+            console.log(queryURL);
+            console.log(response);
 
-    // Create a Modal and display results to User
-    //---------------TO DO-----------------------
+            // Create a Modal and display results to User
+            //---------------TO DO-----------------------
 
+        });
     });
-});
 
     // Movie Reviews API Data
     //-------------------------------------------
@@ -299,22 +446,22 @@ $(document).ready(function () {
 
         // Preventing the submit button from trying to submit the form
         // We're optionally using a form so the user may hit Enter to search instead of clicking the button
-            event.preventDefault();
-    
-    // Query the data from the API
-    //-----Pulls the joke for the CURRENT day only-------------
+        event.preventDefault();
+
+        // Query the data from the API
+        //-----Pulls the joke for the CURRENT day only-------------
         $.ajax(settings).done(function (response) {
-            
+
             // Console Log Results from API
             console.log(response);
             console.log(response.contents.jokes[0].joke.text);
 
-        // Create a Modal and display results to User
-        //---------------TO DO-----------------------
-    
+            // Create a Modal and display results to User
+            //---------------TO DO-----------------------
+
         });
     });
-      
+
 
 
     // Inspirational Quotes API Data
