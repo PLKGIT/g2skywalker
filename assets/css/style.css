@@ -45,3 +45,15 @@ footer{
   text-shadow: 2px 2px 4px #000000;
   padding-top: .5em;
 }
+
+h5{
+  text-align: center;
+}
+.anchorbutton{
+text-align: center;
+  border-style: solid;
+
+}
+.anchorbutton:hover{
+  color:blueviolet
+}
