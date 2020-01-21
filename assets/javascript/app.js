@@ -142,6 +142,10 @@ $(document).ready(function () {
         // Call Weather Function 
         //-----------TO DO--------------
 
+        
+        //this will update movies in UI
+        updateMovies(needMovies);
+
     });
 
     // Get Results Data
@@ -177,7 +181,22 @@ $(document).ready(function () {
         // Pull and store data 
         // Check if Attractions was checked, if so call Attractions function
         // If not, call the Return Results function
-
+        function updateMovies(needMovies) {
+            if (needMovies) {
+                var result;
+                for (var i = 0; i < resultsMovies.length; i++) {
+                    //$("#movies").html("<h5>" + resultsMovies[i].title + " title of movie</h5>")
+                    //$("#movies").html("<h5 id = 'h" + i + "'" + ">" + resultsMovies[i].title + " title of movie</h5>")
+                    // console.log("-----------test--------");
+                    //----just for testing---- UI will be updated later---
+                    let r = resultsMovies[i].title;
+                    result = result + r;
+    
+                    $("#movies").html("<h5 id = 'h" + i + "'" + ">" + result + " title of movie</h5>")
+    
+                }
+            }
+        }
 
     // Attractions API Data
     //-------------------------------------------
@@ -245,7 +264,18 @@ $(document).ready(function () {
     // Movie Reviews API Data
     //-------------------------------------------
     // --------------TO DO------------------   --   
-
+    //.......In Progress(jyochsna)----
+    //----zipcode need to be retrieved from UI------
+    //Ajax call for movies
+    var queryURL = "http://data.tmsapi.com/v1.1/movies/showings?startDate=2020-01-20&zip=94501&api_key=wgkpzjdk25tfwrybxqvrtv2p"
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    }).then(function (response) {
+        console.log(queryURL);
+        console.log(response);
+        resultsMovies = response;
+    });
 
     // Book Reviews API Data
     //-------------------------------------------
