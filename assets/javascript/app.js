@@ -348,11 +348,12 @@ $(document).ready(function () {
     
 
     function updateMovies(needMovies) {
-        var movieAPIKey = "wgkpzjdk25tfwrybxqvrtv2p"
-        var queryURL = "http://data.tmsapi.com/v1.1/movies/showings?startDate=2020-01-20" + "&zip=" + userPlace + "&api_key=" + movieAPIKey
-    $.ajax({
-        url: queryURL,
-        method: "GET"
+        // var movieAPIKey = "wgkpzjdk25tfwrybxqvrtv2p"
+        var apiBaseURL = 'http://api.themoviedb.org/3/'
+     var queryURL = "https://api.themoviedb.org/3/movie/now_playing?api_key=f05036111537ccafc5f4609725114002";
+     $.ajax({
+         url: queryURL,
+         method: "GET"
     }).then(function (response) {
         console.log(queryURL);
         console.log(response);
@@ -379,7 +380,7 @@ $(document).ready(function () {
                 </div>
                 `;
                 });
-                $("#movies").html(output);
+                $("#moviesoutpu").html(output);
 
             
        
