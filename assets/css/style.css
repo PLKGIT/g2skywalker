@@ -17,10 +17,21 @@ h1 {
   font-size: 42px;
 }
 
+
+h5 {
+  text-align: center;
+}
+
 .container {
   padding: 75px 0;
   margin: 0 auto;
 }
+
+#spacer {
+  padding: 20px 0;
+}
+
+
 header {
   position: fixed;
   left: 0;
@@ -34,6 +45,15 @@ header {
   margin-bottom: 50px;
 }
 
+
+#info-box {
+  padding-top: 100px;
+  margin: 0 auto;
+  align-content: center;
+  color: rgba(50, 7, 238);
+}
+
+
 footer{
   position: fixed;
   left: 0;
@@ -41,14 +61,26 @@ footer{
   width: 100%;
   color: white;
   text-align: center;
-  background: rgba(50, 7, 238, 0.5);
+  background: rgba(50, 7, 238, .75);
   text-shadow: 2px 2px 4px #000000;
   padding-top: .5em;
 }
 
-h5{
-  text-align: center;
+footer a:link, a:visited {
+  text-decoration: none;
+  color: white;
 }
+
+footer a:hover {
+  text-decoration: none;
+  color: orangered;
+}
+
+form img {
+  vertical-align: baseline;
+}
+
+
 .anchorbutton{
 text-align: center;
   border-style: solid;
