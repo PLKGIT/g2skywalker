@@ -36,61 +36,79 @@
                     <div class="col-sm">
                         <!--User Input via Form-->
                         <div class="card">
-                            <div class="card-header text-white bg-dark text-center align-items-center">
+                            <div class="card-header text-white bg-primary text-center font-weight-bold align-items-center">
                                 DATE DETAILS
                             </div>
                             <div id="userInput" class="card-body text-left">
                                 <p class="card-text">
-                                    <form>
+                                    <form id="details">
                                         <div class="form-row">
-                                            <div class="col-4">
+                                            <div class="col-lg-6 col-sm-7">
                                                 <div class="form-group text-primary">
-                                                    <label for="userName" class="text-info font-weight-bold">Your
-                                                        Name:</label>
-                                                    <input type="text" class="form-control border border-muted"
-                                                        id="userName" placeholder="John/Jane" required>
-                                                    <div class="invalid-feedback">
-                                                        Please provide your first name.
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text bg-dark text-white">First
+                                                            Name</span>
+                                                        <input type="text" class="form-control border border-muted"
+                                                            id="userName" placeholder="John/Jane">
                                                     </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-2">
-                                                <div class="form-group text-primary">
-                                                    <label for="datePicker"
-                                                        class="text-info font-weight-bold">Date:</label>
-                                                    <input type="text" class="form-control border border-muted"
-                                                        id="datePicker" placeholder="01/01/2020" required>
-                                                    <input type="hidden" class="form-control border border-muted"
-                                                        id="userDate">
-                                                    <div class="invalid-feedback">
-                                                        Please select a date.
-                                                    </div>
+                                                    <span id="invalid_name"></span>
                                                 </div>
                                             </div>
 
-                                            <div class="col-4">
+                                            <div class="col-lg-3 col-sm-5">
                                                 <div class="form-group text-primary">
-                                                    <label for="userPlace" class="text-info font-weight-bold">City/State
-                                                        or Zip:</label>
-                                                    <input type="text" class="form-control border border-muted"
-                                                        id="userPlace" placeholder="94401 or San Mateo, CA" required>
-                                                    <div class="invalid-feedback">
-                                                        Please let us know the location of your date.
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text bg-dark text-white">Date
+                                                            Day</span>
+                                                        <input type="text" class="form-control border border-muted"
+                                                            id="datePicker" readonly="readonly"
+                                                            placeholder="01/01/2020">
+                                                        <input type="hidden" class="form-control border border-muted"
+                                                            id="userDate">
                                                     </div>
+                                                    <span id="invalid_date"></span>
                                                 </div>
                                             </div>
+
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-6">
+                                                <div class="form-group text-primary">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text bg-dark text-white">Source</span>
+                                                        <select class="custom-select" id="source">
+                                                            <option value="" selected>Select...</option>
+                                                            <option value="city">City, State</option>
+                                                            <option value="zip">Zip</option>
+                                                            <option value="map">Map</option>
+                                                        </select>
+                                                    </div>
+                                                    <span id="invalid_source"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group text-primary">
+                                                    <div class="input-group-prepend">
+                                                        <span
+                                                            class="input-group-text bg-dark text-white">Location</span>
+                                                        <input type="text" class="form-control border border-muted"
+                                                            id="userPlace" placeholder="Zipcode OR City, State">
+                                                    </div>
+                                                    <span id="invalid_place"></span>
+                                                </div>
+                                            </div>
+
                                             <div class="col-2">
                                                 <div class="form-group text-primary">
-                                                    <label for="userPlace"
-                                                        class="text-info font-weight-bold">Map:</label><br>
                                                     <img src="assets/images/map_icon.png" class="text-center"
                                                         width="30px">
                                                 </div>
                                             </div>
                                         </div>
+
                                         <div class="form-row text-primary">
                                             <div class="col-12 text-center">
-                                                <label for="checkboxes" class="text-info font-weight-bold">Need:
+                                                <label for="checkboxes" class="text-info font-weight-bold">I Need: &nbsp;
                                                 </label>
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="checkbox" id="needRestaurant"
@@ -113,8 +131,13 @@
                                                     <label class="form-check-label" for="needAttractions">Local
                                                         Attractions</label>
                                                 </div>
-                                                <button type="submit" class="btn btn-sm bg-primary text-white"
-                                                    id="submit">Submit</button>
+                                                <span id="invalid_options"></span>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="col-12">
+                                                    <button type="submit" class="btn btn-md btn-info btn-block"
+                                                        id="submit">Submit</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </form>
@@ -130,7 +153,7 @@
                     <div class="col-9 col-sm-7">
                         <!--Results based on User Input-->
                         <div id="userResults" class="card h-100">
-                            <div class="card-header text-white text-center bg-info">
+                            <div class="card-header text-white text-center font-weight-bold bg-info">
                                 RESULTS
                             </div>
                             <div class="card-body">
@@ -211,7 +234,7 @@
 
                         <!--User Help Options-->
                         <div id="userHelp" class="card h-100">
-                            <div class="card-header text-white text-center bg-info">
+                            <div class="card-header text-white text-center font-weight-bold bg-info">
                                 HELP
                             </div>
                             <div class="card-body">
@@ -289,4 +312,5 @@
 
     </script>
 </body>
+
 </html>

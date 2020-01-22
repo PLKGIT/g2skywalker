@@ -89,3 +89,12 @@ text-align: center;
 .anchorbutton:hover{
   color:blueviolet
 }
+
+#invalid_name, #invalid_date, #invalid_source, #invalid_place, #invalid_options {
+  color: red;
+  text-align: right;
+  font-size: small;
+  font-weight: bold;
+  font-style: italic;
+  align-content: center;
+}

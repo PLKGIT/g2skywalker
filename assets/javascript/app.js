@@ -2,9 +2,9 @@
 
 $(document).ready(function () {
 
-     // Initialize Firebase
+    // Initialize Firebase
 
-     var firebaseConfig = {
+    var firebaseConfig = {
         apiKey: "AIzaSyB9khk4lQ0jXPOoqgHRbc8kGs8FRBLCU0c",
         authDomain: "datenightplanner-db265.firebaseapp.com",
         databaseURL: "https://datenightplanner-db265.firebaseio.com",
@@ -12,7 +12,7 @@ $(document).ready(function () {
         storageBucket: "datenightplanner-db265.appspot.com",
         messagingSenderId: "363079175780",
         appId: "1:363079175780:web:8fbd5e9219a9e1b9019971"
-      };
+    };
 
     firebase.initializeApp(firebaseConfig);
 
@@ -29,10 +29,22 @@ $(document).ready(function () {
     var userName;
     var userDate;
     var userPlace; // 01182020 - Zipcode only right now
+    var placeSource;
     var needRestaurant;
     var needDessert;
     var needMovies;
     var needAttractions;
+
+    // Error Checking Variables
+
+    var errName = false;
+    var errDate = false;
+    var errSource = false;
+    var errPlace = false;
+    var errOptions = false;
+    var containsText = /\D/g;
+    var containsNumbers = /\d/g;
+
 
     // Calculated from User Input
     //-------------------------------------------
@@ -73,7 +85,6 @@ $(document).ready(function () {
     $("#userResults").hide();
     $("#userHelp").hide();
 
-
     // On Submit
     //-------------------------------------------
     //-------------------------------------------
@@ -86,38 +97,139 @@ $(document).ready(function () {
         // Prevents form action default 
         event.preventDefault();
 
-        // Form Validation
-        //------------------TO DO --------------------
-        //          Validate only alpha characters in User name
-        //          Validate only numeric characters in zipcode
-        //          Validate max 5 numbers in zipcode
-        //          Validate at least 1 checkbox checked
-        // NOTE: Date is controlled by the calendar, even if user tries to type something, it is overwritten with a valid date
+        // Clear any error messages
+        $("#invalid_name").text("");
+        $("#invalid_date").text("");
+        $("#invalid_source").text("");
+        $("#invalid_place").text("");
 
-        // Store user input from Form into defined variables
-        userName = $("#userName").val().trim().toUpperCase();
-        console.log("---User's First Name---");
+        // Form Validation
+
+        // Set userName = Form userName
+        // Test if null or equals 0, set or clear error message, and set error counter
+
+        userName = $("#userName").val();
+        console.log("--Contents of User Name--");
         console.log(userName);
 
-        userDate = $("#userDate").val();
-        console.log("---Selected Date---");
-        console.log(userDate);
+        if (userName === "" || userName === "0" || containsNumbers.test(userName)) {
+            $("#invalid_name").html("Please enter your first name.");
+            errName = true;
+        } else {
+            $("#invalid_name").html("");
+            errName = false;
+        }
 
-        dateMonth = userDate.substr(0, 2);
+        console.log("---First Name and Error Status---");
+        console.log(userName);
+        console.log(errName);
+
+        // Set userDate = Form userDate
+        // Date is controlled by the calendar, no user input is allowed
+
+        userDate = $("#userDate").val();
+
+        // if (userDate === "" || userDate.length < 8 || containsText.test(userDate)) {
+        if (userDate === "") {
+            $("#invalid_date").html("Enter a valid date.");
+            errDate = true;
+        } else {
+            $("#invalid_date").html("");
+            errDate = false;
+            dateMonth = userDate.substr(0, 2);
+            dateDay = userDate.substr(2, 2);
+            dateYear = userDate.substr(4, 4);
+        }
+
+        console.log("---Selected Date and Error Status---");
+        console.log(userDate);
+        console.log(errDate);
         console.log("---Selected Month---");
         console.log(dateMonth);
-
-        dateDay = userDate.substr(2, 2);
         console.log("---Selected Day---");
         console.log(dateDay);
-
-        dateYear = userDate.substr(4, 4);
         console.log("---Selected Year---");
         console.log(dateYear);
 
+        // Set placeSource = Form source
+        // Test if null
+
+        placeSource = $("#source").val();
+
+        if (placeSource === "") {
+            $("#invalid_source").html("Select a source.");
+            errSource = true;
+        } else {
+            $("#invalid_source").html("");
+            errSource = false;
+        }
+
+        // Set userPlace = Form userPlace
+        // Test if null
+
         userPlace = $("#userPlace").val();
-        console.log("---Date Location---");
+
+        if (userPlace === "") {
+            $("#invalid_place").html("Enter a location.");
+            errPlace = true;
+        } else {
+            $("#invalid_place").html("");
+            errPlace = false;
+        }
+
+        // Test for Valid Zip Code
+
+        if (placeSource === "zip") {
+
+            if (userPlace === "" || userPlace.length < 5 || userPlace.length > 5 || containsText.test(userPlace)) {
+                $("#invalid_place").html("Enter a zip code.");
+                errPlace = true;
+            } else {
+                $("#invalid_place").html("");
+                errPlace = false;
+            };
+        }
+
+        console.log("---Date Location and Error Status---");
         console.log(userPlace);
+        console.log(errPlace);
+
+        // Test for Valid City and State
+        //-------- To Do --------------
+
+        if (placeSource === "city") {
+
+            if (userPlace === "" || userPlace.indexOf(",") < 0 || containsNumbers.test(userPlace)) {
+                $("#invalid_place").html("Enter a city and state.");
+                errPlace = true;
+            } else {
+                $("#invalid_place").html("");
+                errPlace = false;
+            };
+        }
+
+        console.log("---Date Location and Error Status---");
+        console.log(userPlace);
+        console.log(errPlace);
+
+
+        // Test for Valid Longitude and Latitude (from Map)
+        //-------- To Do --------
+
+        if (placeSource === "map") {
+
+            if (userPlace === "" || placeSource === "map" && userPlace === "" || (userPlace.indexOf(",") < 0)) {
+                $("#invalid_place").html("Select a place from the map.");
+                errPlace = true;
+            } else {
+                $("#invalid_place").html("");
+                errPlace = false;
+            };
+        }
+
+        console.log("---Date Location and Error Status---");
+        console.log(userPlace);
+        console.log(errPlace);
 
         // Setting value of variable based on whether checkbox is checked
         if (document.getElementById("needRestaurant").checked === true) {
@@ -126,17 +238,12 @@ $(document).ready(function () {
             needRestaurant = false;
         }
 
-        console.log("---Need Restaurant---");
-        console.log(needRestaurant);
-
         // Setting value of variable based on whether checkbox is checked
         if (document.getElementById("needDessert").checked === true) {
             needDessert = true;
         } else {
             needDessert = false;
         }
-        console.log("---Need Dessert---");
-        console.log(needDessert);
 
         // Setting value of variable based on whether checkbox is checked
         if (document.getElementById("needMovies").checked === true) {
@@ -144,8 +251,6 @@ $(document).ready(function () {
         } else {
             needMovies = false;
         }
-        console.log("---Need Movies---");
-        console.log(needMovies);
 
         // Setting value of variable based on whether checkbox is checked
         if (document.getElementById("needAttractions").checked === true) {
@@ -153,8 +258,27 @@ $(document).ready(function () {
         } else {
             needAttractions = false;
         }
+
+        // Check that at least one box is checked
+        if (needRestaurant === false && needDessert === false && needMovies === false && needAttractions === false) {
+            errOptions = false;
+            $("#invalid_options").html("Please select at least one option.");
+        } else {
+            $("#invalid_options").html("");
+            errOptions = true;
+        }
+
+        console.log("---Need Restaurant---");
+        console.log(needRestaurant);
+        console.log("---Need Dessert---");
+        console.log(needDessert);
+        console.log("---Need Movies---");
+        console.log(needMovies);
         console.log("---Need Attractions---");
         console.log(needAttractions);
+        console.log("---At least 1 box checked---");
+        console.log(errOptions);
+
 
         // Call Weather Function 
         //-----------TO DO--------------
@@ -162,7 +286,7 @@ $(document).ready(function () {
         weather();
         forecast();
 
-        //this will update movies in UI
+        // Will update movies in UI
         updateMovies(needMovies);
 
     });
@@ -330,7 +454,7 @@ $(document).ready(function () {
     // Cycle through the remaining optional checkboxes (dessert, movies, attractions)
     // Call the appropriate function
     // If none checked, call the Return Results function
-    
+
     // Dessert Spots API Data
     //-------------------------------------------
     // --------------TO DO------------------     
@@ -345,23 +469,23 @@ $(document).ready(function () {
     // Pull and store data 
     // Check if Attractions was checked, if so call Attractions function
     // If not, call the Return Results function
-    
+
 
     function updateMovies(needMovies) {
         // var movieAPIKey = "wgkpzjdk25tfwrybxqvrtv2p"
         var apiBaseURL = 'http://api.themoviedb.org/3/'
-     var queryURL = "https://api.themoviedb.org/3/movie/now_playing?api_key=f05036111537ccafc5f4609725114002";
-     $.ajax({
-         url: queryURL,
-         method: "GET"
-    }).then(function (response) {
-        console.log(queryURL);
-        console.log(response);
-        resultsMovies = response;
-    
+        var queryURL = "https://api.themoviedb.org/3/movie/now_playing?api_key=f05036111537ccafc5f4609725114002";
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+        }).then(function (response) {
+            console.log(queryURL);
+            console.log(response);
+            resultsMovies = response;
 
-        if (needMovies) {
-            
+
+            if (needMovies) {
+
                 let movies = resultsMovies;
                 console.log("-----movie----");
                 console.log(movies);
@@ -382,10 +506,10 @@ $(document).ready(function () {
                 });
                 $("#moviesoutpu").html(output);
 
-            
-       
-        } 
-    });
+
+
+            }
+        });
     }
 
     // Attractions API Data
@@ -457,7 +581,7 @@ $(document).ready(function () {
     //.......In Progress(jyochsna)----
     //----zipcode need to be retrieved from UI------
     //Ajax call for movies
-    
+
     // Book Reviews API Data
     //-------------------------------------------
     // --------------TO DO------------------      
