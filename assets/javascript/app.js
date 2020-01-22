@@ -2,6 +2,23 @@
 
 $(document).ready(function () {
 
+     // Initialize Firebase
+
+     var firebaseConfig = {
+        apiKey: "AIzaSyB9khk4lQ0jXPOoqgHRbc8kGs8FRBLCU0c",
+        authDomain: "datenightplanner-db265.firebaseapp.com",
+        databaseURL: "https://datenightplanner-db265.firebaseio.com",
+        projectId: "datenightplanner-db265",
+        storageBucket: "datenightplanner-db265.appspot.com",
+        messagingSenderId: "363079175780",
+        appId: "1:363079175780:web:8fbd5e9219a9e1b9019971"
+      };
+
+    firebase.initializeApp(firebaseConfig);
+
+    var database = firebase.database();
+
+
     // Global Variables
     //-------------------------------------------
     //-------------------------------------------
