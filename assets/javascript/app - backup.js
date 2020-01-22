@@ -313,7 +313,7 @@ $(document).ready(function () {
     // Cycle through the remaining optional checkboxes (dessert, movies, attractions)
     // Call the appropriate function
     // If none checked, call the Return Results function
-    
+
     // Dessert Spots API Data
     //-------------------------------------------
     // --------------TO DO------------------     
@@ -328,7 +328,14 @@ $(document).ready(function () {
     // Pull and store data 
     // Check if Attractions was checked, if so call Attractions function
     // If not, call the Return Results function
-    
+    // var queryURL = "http://data.tmsapi.com/v1.1/movies/showings?startDate=2020-01-20&zip=94501&api_key=wgkpzjdk25tfwrybxqvrtv2p"
+    // $.ajax({
+    //     url: queryURL,
+    //     method: "GET"
+    // }).then(function (response) {
+    //     console.log(queryURL);
+    //     console.log(response);
+    //     resultsMovies = response;
 
     function updateMovies(needMovies) {
         var movieAPIKey = "wgkpzjdk25tfwrybxqvrtv2p"
