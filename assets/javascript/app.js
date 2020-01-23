@@ -476,8 +476,9 @@ $(document).ready(function () {
 
     function updateMovies(needMovies) {
         // var movieAPIKey = "wgkpzjdk25tfwrybxqvrtv2p"
-        var apiBaseURL = 'http://api.themoviedb.org/3/'
-        var queryURL = "https://api.themoviedb.org/3/movie/now_playing?api_key=f05036111537ccafc5f4609725114002";
+        // var apiBaseURL = 'http://api.themoviedb.org/3/'
+        var apiKey = "wgkpzjdk25tfwrybxqvrtv2p";
+        var queryURL = "http://data.tmsapi.com/v1.1/movies/showings?startDate=" + dateYear + "-" + dateMonth + "-" + dateDay + "&zip=" + userPlace +"&api_key=" + apiKey;
         $.ajax({
             url: queryURL,
             method: "GET"
@@ -487,31 +488,31 @@ $(document).ready(function () {
             resultsMovies = response;
 
 
-            if (needMovies) {
+            // if (needMovies) {
 
-                let movies = resultsMovies;
-                console.log("-----movie----");
-                console.log(movies);
-                let output = '';
-                $.each(movies, (index, movie) => {
-                    //console.log(movie.title);
+            //     let movies = resultsMovies;
+            //     console.log("-----movie----");
+            //     console.log(movies);
+            //     let output = '';
+            //     $.each(movies, (index, movie) => {
+            //         //console.log(movie.title);
 
-                    //output += $(movie.title)
-                    output += `
-                <div class = "col-md-3">
-                <div class = "well text-center">
-                <h5>${movie.title}</h5>
+            //         //output += $(movie.title)
+            //         output += `
+            //     <div class = "col-md-3">
+            //     <div class = "well text-center">
+            //     <h5>${movie.title}</h5>
                 
-                <a href = "${movie.officialUrl}"  target="_blank" class ="anchorbutton">Movie Details</a><br>
-                </div>
-                </div>
-                `;
-                });
-                $("#moviesoutpu").html(output);
+            //     <a href = "${movie.officialUrl}"  target="_blank" class ="anchorbutton">Movie Details</a><br>
+            //     </div>
+            //     </div>
+            //     `;
+            //     });
+            //     $("#moviesoutpu").html(output);
 
 
 
-            }
+            // }
         });
     }
 
