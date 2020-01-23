@@ -109,8 +109,8 @@ $(document).ready(function () {
         // Test if null or equals 0, set or clear error message, and set error counter
 
         userName = $("#userName").val();
-        console.log("--Contents of User Name--");
-        console.log(userName);
+        // console.log("--Contents of User Name--");
+        // console.log(userName);
 
         if (userName === "" || userName === "0" || containsNumbers.test(userName)) {
             $("#invalid_name").html("Please enter your first name.");
@@ -120,9 +120,9 @@ $(document).ready(function () {
             errName = false;
         }
 
-        console.log("---First Name and Error Status---");
-        console.log(userName);
-        console.log(errName);
+        // console.log("---First Name and Error Status---");
+        // console.log(userName);
+        // console.log(errName);
 
         // Set userDate = Form userDate
         // Date is controlled by the calendar, no user input is allowed
@@ -141,15 +141,15 @@ $(document).ready(function () {
             dateYear = userDate.substr(4, 4);
         }
 
-        console.log("---Selected Date and Error Status---");
-        console.log(userDate);
-        console.log(errDate);
-        console.log("---Selected Month---");
-        console.log(dateMonth);
-        console.log("---Selected Day---");
-        console.log(dateDay);
-        console.log("---Selected Year---");
-        console.log(dateYear);
+        // console.log("---Selected Date and Error Status---");
+        // console.log(userDate);
+        // console.log(errDate);
+        // console.log("---Selected Month---");
+        // console.log(dateMonth);
+        // console.log("---Selected Day---");
+        // console.log(dateDay);
+        // console.log("---Selected Year---");
+        // console.log(dateYear);
 
         // Set placeSource = Form source
         // Test if null
@@ -190,12 +190,12 @@ $(document).ready(function () {
             };
         }
 
-        console.log("---Date Location and Error Status---");
-        console.log(userPlace);
-        console.log(errPlace);
+        // console.log("---Date Location and Error Status---");
+        // console.log(userPlace);
+        // console.log(errPlace);
 
         // Test for Valid City and State
-        //-------- To Do --------------
+        //-------- In Progress --------
 
         if (placeSource === "city") {
 
@@ -208,13 +208,13 @@ $(document).ready(function () {
             };
         }
 
-        console.log("---Date Location and Error Status---");
-        console.log(userPlace);
-        console.log(errPlace);
+        // console.log("---Date Location and Error Status---");
+        // console.log(userPlace);
+        // console.log(errPlace);
 
 
         // Test for Valid Longitude and Latitude (from Map)
-        //-------- To Do --------
+        //-------- In Progress --------
 
         if (placeSource === "map") {
 
@@ -227,9 +227,9 @@ $(document).ready(function () {
             };
         }
 
-        console.log("---Date Location and Error Status---");
-        console.log(userPlace);
-        console.log(errPlace);
+        // console.log("---Date Location and Error Status---");
+        // console.log(userPlace);
+        // console.log(errPlace);
 
         // Setting value of variable based on whether checkbox is checked
         if (document.getElementById("needRestaurant").checked === true) {
@@ -268,20 +268,23 @@ $(document).ready(function () {
             errOptions = true;
         }
 
-        console.log("---Need Restaurant---");
-        console.log(needRestaurant);
-        console.log("---Need Dessert---");
-        console.log(needDessert);
-        console.log("---Need Movies---");
-        console.log(needMovies);
-        console.log("---Need Attractions---");
-        console.log(needAttractions);
-        console.log("---At least 1 box checked---");
-        console.log(errOptions);
+        // console.log("---Need Restaurant---");
+        // console.log(needRestaurant);
+        // console.log("---Need Dessert---");
+        // console.log(needDessert);
+        // console.log("---Need Movies---");
+        // console.log(needMovies);
+        // console.log("---Need Attractions---");
+        // console.log(needAttractions);
+        // console.log("---At least 1 box checked---");
+        // console.log(errOptions);
 
 
-        // Call Weather Function 
-        //-----------TO DO--------------
+        // Hide User Results and Help on initial page load
+        $("#userResults").show();
+        $("#userHelp").show();
+
+        // Call Weather Functions 
 
         weather();
         forecast();
@@ -551,28 +554,19 @@ $(document).ready(function () {
     // AJAX Call when Day In History Button Clicked
     $("#history").on("click", function (event) {
 
-        // Preventing the submit button from trying to submit the form
-        // We're optionally using a form so the user may hit Enter to search instead of clicking the button
-        event.preventDefault();
-
-        // Construct API URL with date supplied by user
+ // Construct API URL with date supplied by user
         var queryURL = "https://byabbe.se/on-this-day/" + dateMonth.replace(/^0+/, '') + "/" + dateDay.replace(/^0+/, '') + "/events.json";
-
-        // Query the data from the API
 
         $.ajax({
             url: queryURL,
             method: "GET"
         }).then(function (response) {
+            console.log(response.events);
 
-            // Console Log Results from API
-            console.log(queryURL);
-            console.log(response);
-
-            // Create a Modal and display results to User
-            //---------------TO DO-----------------------
-
+            $("#resultsHistory").html(response.events[0].year + " " + response.events[0].description + "<b>");
+            
         });
+
     });
 
     // Movie Reviews API Data
@@ -615,12 +609,11 @@ $(document).ready(function () {
             console.log(response.contents.jokes[0].joke.text);
 
             // Create a Modal and display results to User
-            //---------------TO DO-----------------------
+            // $("#resultsJoke").html(joke);
+            $("#resultsJoke").html(response.contents.jokes[0].joke.text);
 
         });
     });
-
-
 
     // Inspirational Quotes API Data
     //-------------------------------------------
