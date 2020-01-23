@@ -44,6 +44,7 @@ $(document).ready(function () {
     var errOptions = false;
     var containsText = /\D/g;
     var containsNumbers = /\d/g;
+    var zip_code = false;
 
 
     // Calculated from User Input
@@ -177,6 +178,22 @@ $(document).ready(function () {
             errPlace = false;
         }
 
+        // Get longitude and latitude
+
+        var convAPIkey = "c833b0a3e4104de495176d7252219568";
+        var convQueryURL = "https://api.opencagedata.com/geocode/v1/json?q=" + userPlace + "&key=" + convAPIkey + "&language=en&pretty=1"
+
+        $.ajax({
+            url: convQueryURL,
+            method: "GET"
+        })
+            .then(function (response) {
+                latitude = response.results[0].geometry.lat;
+                longitude = response.results[0].geometry.lng;
+                console.log(latitude);
+                console.log(longitude);
+            });
+
         // Test for Valid Zip Code
 
         if (placeSource === "zip") {
@@ -186,6 +203,7 @@ $(document).ready(function () {
                 errPlace = true;
             } else {
                 $("#invalid_place").html("");
+                zip_code = true;
                 errPlace = false;
             };
         }
@@ -309,8 +327,18 @@ $(document).ready(function () {
     function weather() {
 
         var weatherAPIKey = "166a433c57516f51dfab1f7edaed8413";
-        var weatherQueryURL = "https://api.openweathermap.org/data/2.5/weather?" +
-            "zip=" + userPlace + "&appid=" + weatherAPIKey;
+
+        var weatherQueryURL = "";
+
+        if (zip_code) {
+
+            weatherQueryURL = "https://api.openweathermap.org/data/2.5/weather?zip=" + userPlace + "&appid=" + weatherAPIKey;
+
+        } else {
+
+            weatherQueryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + userPlace + "&appid=" + weatherAPIKey;
+
+        }
 
         $.ajax({
             url: weatherQueryURL,
@@ -327,42 +355,42 @@ $(document).ready(function () {
                 var cloudy = "";
 
                 if (response.wind.speed < 11) {
-                    windy = "light breeze";
+                    windy = "Light breeze";
                 }
 
                 if (response.wind.speed > 10 && response.wind.speed < 39) {
-                    windy = "moderate wind";
+                    windy = "Moderate wind";
                 }
 
                 if (response.wind.speed > 38 && response.wind.speed < 62) {
-                    windy = "strong wind";
+                    windy = "Strong wind";
                 }
 
                 if (response.wind.speed > 61 && response.wind.speed < 103) {
-                    windy = "very strong wind";
+                    windy = "Very strong wind";
                 }
 
                 if (response.wind.speed > 102) {
-                    windy = "hurricane";
+                    windy = "Hurricane";
                 }
 
                 if (response.clouds.all < 11) {
-                    cloudy = "sunny";
+                    cloudy = "Sunny";
                 }
                 if (response.clouds.all > 10 && response.clouds.all < 26) {
-                    cloudy = "slightly cloudy";
+                    cloudy = "Slightly cloudy";
                 }
 
                 if (response.clouds.all > 25 && response.clouds.all < 51) {
-                    cloudy = "partly cloudy";
+                    cloudy = "Partly cloudy";
                 }
 
                 if (response.clouds.all > 52 && response.clouds.all < 76) {
-                    cloudy = "very cloudy";
+                    cloudy = "Very cloudy";
                 }
 
                 if (response.clouds.all > 75) {
-                    cloudy = "overcast";
+                    cloudy = "Overcast";
                 }
 
                 // Transfer content to HTML for current weather information 
@@ -370,7 +398,7 @@ $(document).ready(function () {
                 var highTemp = (response.main.temp_max - 273.15) * 1.80 + 32;
                 var lowTemp = (response.main.temp_min - 273.15) * 1.80 + 32;
 
-                $("#weather").html("<h1>" + response.name + "</h1><br>Current Temperature: " + temp.toFixed(2) + "<br>High: " + highTemp.toFixed(2) + "<br>Low: " + lowTemp.toFixed(2) + "<br>" + cloudy + "<br>" + windy);
+                $("#weather").html("<br>Current Temperature: " + temp.toFixed(1) + " | High: " + highTemp.toFixed(1) + " | Low: " + lowTemp.toFixed(1) + " | " + cloudy + " | " + windy + "<br>");
 
             });
 
@@ -378,9 +406,18 @@ $(document).ready(function () {
 
     function forecast() {
         var forecastAPIKey = "166a433c57516f51dfab1f7edaed8413";
-        var forecastQueryURL = "https://api.openweathermap.org/data/2.5/forecast?" +
-            "zip=" + userPlace + "&appid=" + forecastAPIKey;
 
+        var forecastQueryURL = "";
+
+        if (zip_code) {
+
+            forecastQueryURL = "https://api.openweathermap.org/data/2.5/forecast?zip=" + userPlace + "&appid=" + forecastAPIKey;
+
+        } else {
+
+            forecastQueryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + userPlace + "&appid=" + forecastAPIKey;
+
+        }
         $.ajax({
             url: forecastQueryURL,
             method: "GET"
@@ -396,45 +433,45 @@ $(document).ready(function () {
 
                 function wind(i) {
                     if (response.list[i].wind.speed < 11) {
-                        windy = "light breeze";
+                        windy = "Light breeze";
                     }
 
                     if (response.list[i].wind.speed > 10 && response.list[i].wind.speed < 39) {
-                        windy = "moderate wind";
+                        windy = "Moderate wind";
                     }
 
                     if (response.list[i].wind.speed > 38 && response.list[i].wind.speed < 62) {
-                        windy = "strong wind";
+                        windy = "Strong wind";
                     }
 
                     if (response.list[i].wind.speed > 61 && response.list[i].wind.speed < 103) {
-                        windy = "very strong wind";
+                        windy = "Very strong wind";
                     }
 
                     if (response.list[i].wind.speed > 102) {
-                        windy = "hurricane";
+                        windy = "Hurricane";
                     }
 
                 }
 
                 function cloud(i) {
                     if (response.list[i].clouds.all < 11) {
-                        cloudy = "sunny";
+                        cloudy = "Sunny";
                     }
                     if (response.list[i].clouds.all > 10 && response.list[i].clouds.all < 26) {
-                        cloudy = "slightly cloudy";
+                        cloudy = "Slightly cloudy";
                     }
 
                     if (response.list[i].clouds.all > 25 && response.list[i].clouds.all < 51) {
-                        cloudy = "partly cloudy";
+                        cloudy = "Partly cloudy";
                     }
 
                     if (response.list[i].clouds.all > 52 && response.list[i].clouds.all < 76) {
-                        cloudy = "very cloudy";
+                        cloudy = "Very cloudy";
                     }
 
                     if (response.list[i].clouds.all > 75) {
-                        cloudy = "overcast";
+                        cloudy = "Overcast";
                     }
 
                 }
@@ -443,7 +480,7 @@ $(document).ready(function () {
                     var temp = (response.list[hours[i]].main.temp - 273.15) * 1.80 + 32;
                     wind(hours[i]);
                     cloud(hours[i])
-                    $("#forecast").append("<br><h5>" + response.city.name + " Day " + i + "</h5><br>Temperature: " + temp.toFixed(2) + "<br>" + windy + "<br>" + cloudy + "<br>");
+                    $("#forecast").append("Day " + (i + 1) + ": Avg. Temp.: " + temp.toFixed(1) + " | " + windy + " | " + cloudy + "<br>");
                 }
 
             });
@@ -516,6 +553,24 @@ $(document).ready(function () {
         });
     }
 
+    function updateMovies(needMovies) {
+        // var movieAPIKey = "wgkpzjdk25tfwrybxqvrtv2p"
+        // var apiBaseURL = 'http://api.themoviedb.org/3/'
+        var apiKey = "wgkpzjdk25tfwrybxqvrtv2p";
+        var queryURL = "http://data.tmsapi.com/v1.1/movies/showings?startDate=" + dateYear + "-" + dateMonth + "-" + dateDay + "&zip=" + userPlace + "&api_key=" + apiKey;
+
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+        })
+
+            .then(function (response) {
+                console.log(queryURL);
+                console.log(response);
+                resultsMovies = response;
+
+            })
+    }
     // Attractions API Data
     //-------------------------------------------
     // --------------TO DO------------------      
@@ -555,7 +610,7 @@ $(document).ready(function () {
     // AJAX Call when Day In History Button Clicked
     $("#history").on("click", function (event) {
 
- // Construct API URL with date supplied by user
+        // Construct API URL with date supplied by user
         var queryURL = "https://byabbe.se/on-this-day/" + dateMonth.replace(/^0+/, '') + "/" + dateDay.replace(/^0+/, '') + "/events.json";
 
         $.ajax({
@@ -565,7 +620,7 @@ $(document).ready(function () {
             console.log(response.events);
 
             $("#resultsHistory").html(response.events[0].year + " " + response.events[0].description + "<b>");
-            
+
         });
 
     });
