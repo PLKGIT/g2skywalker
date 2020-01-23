@@ -178,6 +178,22 @@ $(document).ready(function () {
             errPlace = false;
         }
 
+        // Get longitude and latitude
+
+        var convAPIkey = "c833b0a3e4104de495176d7252219568";
+        var convQueryURL = "https://api.opencagedata.com/geocode/v1/json?q=" + userPlace + "&key=" + convAPIkey + "&language=en&pretty=1"
+
+        $.ajax({
+            url: convQueryURL,
+            method: "GET"
+        })
+            .then(function (response) {
+                latitude = response.results[0].geometry.lat;
+                longitude = response.results[0].geometry.lng;
+                console.log(latitude);
+                console.log(longitude);
+            });
+
         // Test for Valid Zip Code
 
         if (placeSource === "zip") {
