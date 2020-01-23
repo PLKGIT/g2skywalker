@@ -515,7 +515,7 @@ $(document).ready(function () {
         // var movieAPIKey = "wgkpzjdk25tfwrybxqvrtv2p"
         // var apiBaseURL = 'http://api.themoviedb.org/3/'
         var apiKey = "wgkpzjdk25tfwrybxqvrtv2p";
-        var queryURL = "http://data.tmsapi.com/v1.1/movies/showings?startDate=" + dateYear + "-" + dateMonth + "-" + dateDay + "&zip=" + userPlace +"&api_key=" + apiKey;
+        var queryURL = "http://data.tmsapi.com/v1.1/movies/showings?startDate=" + dateYear + "-" + dateMonth + "-" + dateDay + "&zip=" + userPlace + "&api_key=" + apiKey;
         $.ajax({
             url: queryURL,
             method: "GET"
@@ -539,7 +539,7 @@ $(document).ready(function () {
             //     <div class = "col-md-3">
             //     <div class = "well text-center">
             //     <h5>${movie.title}</h5>
-                
+
             //     <a href = "${movie.officialUrl}"  target="_blank" class ="anchorbutton">Movie Details</a><br>
             //     </div>
             //     </div>
@@ -553,7 +553,7 @@ $(document).ready(function () {
         });
     }
 
-    
+
     // Attractions API Data
     //-------------------------------------------
     // --------------TO DO------------------      
@@ -655,8 +655,23 @@ $(document).ready(function () {
     });
 
     // Inspirational Quotes API Data
-    //-------------------------------------------
-    // --------------TO DO------------------      
+    //------------------------------------------- 
+    $("#quotes").on("click", function (event) {
 
+        // Construct API URL with date supplied by user
+        var queryURL = "http://quotes.rest/qod.json";
+
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+        }).then(function (response) {
+            console.log(response);
+            console.log(response.contents.quotes[0].quote);
+
+            $("#resultsQuotes").html(response.contents.quotes[0].quote);
+
+        });
+
+    });
 
 });
