@@ -553,24 +553,7 @@ $(document).ready(function () {
         });
     }
 
-    function updateMovies(needMovies) {
-        // var movieAPIKey = "wgkpzjdk25tfwrybxqvrtv2p"
-        // var apiBaseURL = 'http://api.themoviedb.org/3/'
-        var apiKey = "wgkpzjdk25tfwrybxqvrtv2p";
-        var queryURL = "http://data.tmsapi.com/v1.1/movies/showings?startDate=" + dateYear + "-" + dateMonth + "-" + dateDay + "&zip=" + userPlace + "&api_key=" + apiKey;
-
-        $.ajax({
-            url: queryURL,
-            method: "GET"
-        })
-
-            .then(function (response) {
-                console.log(queryURL);
-                console.log(response);
-                resultsMovies = response;
-
-            })
-    }
+    
     // Attractions API Data
     //-------------------------------------------
     // --------------TO DO------------------      
