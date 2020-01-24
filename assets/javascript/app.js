@@ -183,16 +183,56 @@ $(document).ready(function () {
         var convAPIkey = "c833b0a3e4104de495176d7252219568";
         var convQueryURL = "https://api.opencagedata.com/geocode/v1/json?q=" + userPlace + "&key=" + convAPIkey + "&language=en&pretty=1"
 
+        var result;
+
         $.ajax({
+            type: "GET",
             url: convQueryURL,
-            method: "GET"
-        })
-            .then(function (response) {
+            datatype: "json",
+            async: false,
+            success: function(response){
+                result = response;
                 latitude = response.results[0].geometry.lat;
-                longitude = response.results[0].geometry.lng;
-                console.log(latitude);
-                console.log(longitude);
-            });
+                longitude = response.results[0].geometry.lng
+                console.log(latitude + " , " + longitude);                
+            }
+        });
+
+
+
+        // function myCallback(response) {
+        //     latitude = response.results[0].geometry.lat;
+        //     longitude = response.results[0].geometry.lng;
+        //     console.log("Inside ajax: " + latitude);
+        //     // Do whatever you need with result variable
+
+        // }
+        // $.ajax({
+        //     type: "GET",
+        //     url: convQueryURL,
+        //     datatype: "json",
+        //     success: myCallback,
+        // });
+
+
+        console.log(latitude + " , " + longitude);
+
+        // $.ajax({
+        //     url: convQueryURL,
+        //     method: "GET",
+        //     async: false,
+        // })
+        //     success: (function (response) {
+        //         latitude = response.results[0].geometry.lat;
+        //         longitude = response.results[0].geometry.lng;
+        //         console.log(latitude);
+        //         console.log(longitude);
+        //         return latitude; 
+        //         return longitude; 
+        //     });
+
+        //console.log(latitude);
+        // console.log(longitude);
 
         // Test for Valid Zip Code
 
@@ -304,6 +344,7 @@ $(document).ready(function () {
 
         // Call Weather Functions 
 
+        sunset();
         weather();
         forecast();
 
@@ -324,6 +365,28 @@ $(document).ready(function () {
     // Cycle through the optional checkboxes (restaurants, dessert, movies, attractions)
     // Call the appropriate function
 
+   
+
+    function sunset() {
+
+         latitude = latitude;
+         longitude = longitude;
+
+        //var sunQueryURL = "https://api.sunrise-sunset.org/json?lat=" + latitude + "&lng=" + longitude; 
+
+
+        $.ajax({
+            url: "https://api.sunrise-sunset.org/json?lat=" + latitude + "&lng=" + longitude,
+            method: "GET",
+        })
+
+            .then(function (response) {
+
+                console.log(response.results);
+
+            });
+
+    }
 
     function weather() {
 
@@ -493,21 +556,22 @@ $(document).ready(function () {
     // Restaurants API Data
     //-------------------------------------------
     // --------------TO DO------------------   
-    function dessertShops(needDessert){
-       var latitude = latitude;
-       var longitude = longitude;
+    function dessertShops() {
+        latitude = latitude;
+        longitude = longitude;
+        console.log(latitude);
 
 
         var apiKey = " d0782c26de92e778b76dcefa06a8ea95";
-$.ajax({
-    url: "https://developers.zomato.com/api/v2.1/search?q=desserts" + "&lat=" + latitude +"&lon=" + longitude,
+        $.ajax({
+            url: "https://developers.zomato.com/api/v2.1/search?q=desserts" + "&lat=" + latitude + "&lon=" + longitude,
 
-    method:"GET",
-    headers: { "user-key": apiKey},
+            method: "GET",
+            headers: { "user-key": apiKey },
 
-}).then(function(response){
-    console.log(response);
-})
+        }).then(function (response) {
+            console.log(response);
+        })
 
     }
     // Pull and store data 
@@ -542,18 +606,18 @@ $.ajax({
         }).then(function (response) {
             console.log(queryURL);
             console.log(response);
-           var resultsMovies = response;
-           for (let i= 0; i<resultsMovies.length; i++){
-               console.log(resultsMovies[i]);
-               var title = resultsMovies[i].title;
-               var moviDetails = resultsMovies[i].officialUrl;
-               var newRow = $("<tr>").append(
-                   $("<td>").text(title),
-                   $("<td>").text(moviDetails)
-               );
-               $("#movie-table > tbody").append(newRow);
-               
-           }
+            var resultsMovies = response;
+            for (let i = 0; i < resultsMovies.length; i++) {
+                console.log(resultsMovies[i]);
+                var title = resultsMovies[i].title;
+                var moviDetails = resultsMovies[i].officialUrl;
+                var newRow = $("<tr>").append(
+                    $("<td>").text(title),
+                    $("<td>").text(moviDetails)
+                );
+                $("#movie-table > tbody").append(newRow);
+
+            }
 
 
             // if (needMovies) {
