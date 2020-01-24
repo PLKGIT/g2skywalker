@@ -309,6 +309,7 @@ $(document).ready(function () {
 
         // Will update movies in UI
         updateMovies(needMovies);
+        dessertShops(needDessert);
 
     });
 
@@ -487,9 +488,28 @@ $(document).ready(function () {
 
     }
 
+
+
     // Restaurants API Data
     //-------------------------------------------
     // --------------TO DO------------------   
+    function dessertShops(needDessert){
+       var latitude = latitude;
+       var longitude = longitude;
+
+
+        var apiKey = " d0782c26de92e778b76dcefa06a8ea95";
+$.ajax({
+    url: "https://developers.zomato.com/api/v2.1/search?q=desserts" + "&lat=" + latitude +"&lon=" + longitude,
+
+    method:"GET",
+    headers: { "user-key": apiKey},
+
+}).then(function(response){
+    console.log(response);
+})
+
+    }
     // Pull and store data 
     // Cycle through the remaining optional checkboxes (dessert, movies, attractions)
     // Call the appropriate function
@@ -522,7 +542,18 @@ $(document).ready(function () {
         }).then(function (response) {
             console.log(queryURL);
             console.log(response);
-            resultsMovies = response;
+           var resultsMovies = response;
+           for (let i= 0; i<resultsMovies.length; i++){
+               console.log(resultsMovies[i]);
+               var title = resultsMovies[i].title;
+               var moviDetails = resultsMovies[i].officialUrl;
+               var newRow = $("<tr>").append(
+                   $("<td>").text(title),
+                   $("<td>").text(moviDetails)
+               );
+               $("#movie-table > tbody").append(newRow);
+               
+           }
 
 
             // if (needMovies) {
