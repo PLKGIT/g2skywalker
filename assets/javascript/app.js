@@ -348,10 +348,11 @@ $(document).ready(function () {
         updateMovies(needMovies);
         // dessertShops(needDessert);
         restaurant();
+        dessertShops(needDessert);
 
     });
 
-    //calling function  for restaurant latitude and longitude for Restaurant call..
+    // latitude and longitude for Restaurant call..
     function restaurant() {
         var convAPIkey = "c833b0a3e4104de495176d7252219568";
         var convQueryURL = "https://api.opencagedata.com/geocode/v1/json?q=" + userPlace + "&key=" + convAPIkey + "&language=en&pretty=1"
@@ -368,6 +369,7 @@ $(document).ready(function () {
                 // console.log(longitude);
 
                 restaurantHelper(latitude, longitude);
+                
             });
     }
     // Get Results Data
@@ -598,7 +600,51 @@ $(document).ready(function () {
 
     // Dessert Spots API Data
     //-------------------------------------------
-    // --------------TO DO------------------     
+    // --------------TO DO------------------   
+    function dessertShops(needDessert){
+    var latitude =37.765205
+    var longitude = -122.241638
+    var apiKey = " d0782c26de92e778b76dcefa06a8ea95";
+$.ajax({
+    url: "https://developers.zomato.com/api/v2.1/search?q=desserts" + "&lat=" + latitude + "&lon=" + longitude,
+
+    method:"GET",
+    headers: { "user-key": apiKey},
+
+}).then(function(response){
+
+    console.log(response);
+    // if(needDessert){
+    var results = response;
+    console.log(results);
+    console.log("------Test----");
+    console.log(results.restaurants[0].restaurant.name);
+   
+    for (let i = 0; i<results.restaurants.length; i++){
+    //     console.log("###titleonly####");
+    //    console.log(results.restaurants[i].restaurant.name);
+    //    console.log(results.restaurants[i].restaurant.location);
+    //    console.log(results.restaurants[i].restaurant.highlights);
+       var name = results.restaurants[i].restaurant.name;
+       var location = results.restaurants[i].restaurant.location.address;
+       var timings = results.restaurants[i].restaurant.timings;
+     
+       var newRow = $("<tr>").append(
+           $("<td>").text(name),
+            $("<td>").text(location),
+                $("<td>").text(timings)
+                   
+       );
+       $("#desserts-table > tbody").append(newRow);
+    // //    console.log("!!!!!!LOCATION!!!!");
+    // //    console.log(results.restaurants[i].restaurant.location);
+    
+    //    }
+}
+})
+    }
+
+
     // Pull and store data 
     // Cycle through the remaining optional checkboxes (movies and attractions)
     // Call the appropriate function
