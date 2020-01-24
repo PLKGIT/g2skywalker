@@ -27,7 +27,7 @@ $(document).ready(function () {
     // User Input Variables
     //-------------------------------------------
     var userName;
-    var userDate;
+    var userDate=moment().format('L');
     var userPlace; // 01182020 - Zipcode only right now
     var placeSource;
     var needRestaurant;
@@ -183,22 +183,19 @@ $(document).ready(function () {
         var convAPIkey = "c833b0a3e4104de495176d7252219568";
         var convQueryURL = "https://api.opencagedata.com/geocode/v1/json?q=" + userPlace + "&key=" + convAPIkey + "&language=en&pretty=1"
 
-        var result;
-
         $.ajax({
             type: "GET",
             url: convQueryURL,
             datatype: "json",
             async: false,
             success: function(response){
-                result = response;
                 latitude = response.results[0].geometry.lat;
                 longitude = response.results[0].geometry.lng
-                console.log(latitude + " , " + longitude);                
+                console.log("Internal to Function: " + latitude + " , " + longitude);                
             }
         });
 
-
+        console.log("External to Function: " + latitude + " , " + longitude);
 
         // function myCallback(response) {
         //     latitude = response.results[0].geometry.lat;
@@ -215,7 +212,6 @@ $(document).ready(function () {
         // });
 
 
-        console.log(latitude + " , " + longitude);
 
         // $.ajax({
         //     url: convQueryURL,
@@ -231,7 +227,7 @@ $(document).ready(function () {
         //         return longitude; 
         //     });
 
-        //console.log(latitude);
+        // console.log(latitude);
         // console.log(longitude);
 
         // Test for Valid Zip Code
@@ -319,11 +315,11 @@ $(document).ready(function () {
 
         // Check that at least one box is checked
         if (needRestaurant === false && needDessert === false && needMovies === false && needAttractions === false) {
-            errOptions = false;
+            errOptions = true;
             $("#invalid_options").html("Please select at least one option.");
         } else {
             $("#invalid_options").html("");
-            errOptions = true;
+            errOptions = false;
         }
 
         // console.log("---Need Restaurant---");
@@ -368,9 +364,6 @@ $(document).ready(function () {
    
 
     function sunset() {
-
-         latitude = latitude;
-         longitude = longitude;
 
         //var sunQueryURL = "https://api.sunrise-sunset.org/json?lat=" + latitude + "&lng=" + longitude; 
 
@@ -462,7 +455,8 @@ $(document).ready(function () {
                 var highTemp = (response.main.temp_max - 273.15) * 1.80 + 32;
                 var lowTemp = (response.main.temp_min - 273.15) * 1.80 + 32;
 
-                $("#weather").html("<br>Current Temperature: " + temp.toFixed(1) + " | High: " + highTemp.toFixed(1) + " | Low: " + lowTemp.toFixed(1) + " | " + cloudy + " | " + windy + "<br>");
+                $("#resultsWeather").empty();
+                $("#resultsWeather").html("<br>Current Temperature: " + temp.toFixed(1) + " | High: " + highTemp.toFixed(1) + " | Low: " + lowTemp.toFixed(1) + " | " + cloudy + " | " + windy + "<br>");
 
             });
 
@@ -488,6 +482,7 @@ $(document).ready(function () {
         })
 
             .then(function (response) {
+                $("#resultsForecast").empty();
 
                 var hours = [7, 15, 23, 31, 39];
                 var days = [1, 2, 3, 4, 5];
@@ -544,7 +539,8 @@ $(document).ready(function () {
                     var temp = (response.list[hours[i]].main.temp - 273.15) * 1.80 + 32;
                     wind(hours[i]);
                     cloud(hours[i])
-                    $("#forecast").append("Day " + (i + 1) + ": Avg. Temp.: " + temp.toFixed(1) + " | " + windy + " | " + cloudy + "<br>");
+
+                    $("#resultsForecast").append("Day " + (i + 1) + ": Avg. Temp.: " + temp.toFixed(1) + " | " + windy + " | " + cloudy + "<br>");
                 }
 
             });
@@ -557,10 +553,6 @@ $(document).ready(function () {
     //-------------------------------------------
     // --------------TO DO------------------   
     function dessertShops() {
-        latitude = latitude;
-        longitude = longitude;
-        console.log(latitude);
-
 
         var apiKey = " d0782c26de92e778b76dcefa06a8ea95";
         $.ajax({
@@ -596,19 +588,18 @@ $(document).ready(function () {
 
 
     function updateMovies(needMovies) {
-        // var movieAPIKey = "wgkpzjdk25tfwrybxqvrtv2p"
-        // var apiBaseURL = 'http://api.themoviedb.org/3/'
         var apiKey = "wgkpzjdk25tfwrybxqvrtv2p";
         var queryURL = "http://data.tmsapi.com/v1.1/movies/showings?startDate=" + dateYear + "-" + dateMonth + "-" + dateDay + "&zip=" + userPlace + "&api_key=" + apiKey;
         $.ajax({
             url: queryURL,
             method: "GET"
         }).then(function (response) {
-            console.log(queryURL);
-            console.log(response);
+            // console.log(queryURL);
+            // console.log(response);
             var resultsMovies = response;
+            $("#movie-table > tbody").empty();
             for (let i = 0; i < resultsMovies.length; i++) {
-                console.log(resultsMovies[i]);
+                // console.log(resultsMovies[i]);
                 var title = resultsMovies[i].title;
                 var moviDetails = resultsMovies[i].officialUrl;
                 var newRow = $("<tr>").append(
@@ -641,9 +632,6 @@ $(document).ready(function () {
             //     `;
             //     });
             //     $("#moviesoutpu").html(output);
-
-
-
             // }
         });
     }
@@ -749,20 +737,26 @@ $(document).ready(function () {
         });
     });
 
-    // Inspirational Quotes API Data
+    // Inspirational Quote of the Day API Data
     //------------------------------------------- 
+    //-----Pulls the quote for the CURRENT day only-----------
+
+    var settingsQuotes = {
+        "async": true,
+        "crossDomain": true,
+        "url": "http://quotes.rest/qod.json",
+        "method": "GET",
+    }
+
     $("#quotes").on("click", function (event) {
 
-        // Construct API URL with date supplied by user
-        var queryURL = "http://quotes.rest/qod.json";
+        $.ajax(settingsQuotes).done(function (response) {
 
-        $.ajax({
-            url: queryURL,
-            method: "GET"
-        }).then(function (response) {
-            console.log(response);
-            console.log(response.contents.quotes[0].quote);
+            // Console Log Results from API
+            // console.log(response);
+            // console.log(response.contents.quotes[0].quote);
 
+            // Create a Modal and display results to User
             $("#resultsQuotes").html(response.contents.quotes[0].quote);
 
         });

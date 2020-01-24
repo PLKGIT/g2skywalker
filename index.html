@@ -72,21 +72,8 @@
 
                                         </div>
                                         <div class="form-row">
+
                                             <div class="col-6">
-                                                <div class="form-group text-primary">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text bg-dark text-white">Source</span>
-                                                        <select class="custom-select" id="source">
-                                                            <option value="" selected>Select...</option>
-                                                            <option value="city">City, State</option>
-                                                            <option value="zip">Zip</option>
-                                                            <option value="map">Map</option>
-                                                        </select>
-                                                    </div>
-                                                    <span id="invalid_source"></span>
-                                                </div>
-                                            </div>
-                                            <div class="col-4">
                                                 <div class="form-group text-primary">
                                                     <div class="input-group-prepend">
                                                         <span
@@ -97,7 +84,20 @@
                                                     <span id="invalid_place"></span>
                                                 </div>
                                             </div>
-
+                                            <div class="col-4">
+                                                <div class="form-group text-primary">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text bg-dark text-white">Source</span>
+                                                        <select class="custom-select" id="source">
+                                                            <option value="">Select...</option>
+                                                            <option value="city">City, State</option>
+                                                            <option value="zip" selected>Zip</option>
+                                                            <option value="map">Map</option>
+                                                        </select>
+                                                    </div>
+                                                    <span id="invalid_source"></span>
+                                                </div>
+                                            </div>
                                             <div class="col-2">
                                                 <div class="form-group text-primary">
                                                     <img src="assets/images/map_icon.png" class="text-center"
@@ -165,72 +165,43 @@
 
                                         <h3>Top Rated Restaurants</h3>
                                         <div id="restaurants">
-                                            <h5>If requested, restaurants results will go here.</h5>
-                                            <ul>
-                                                <li>Item 1</li>
-                                                <li>Item 2</li>
-                                                <li>Item 3</li>
-                                                <li>Item 4</li>
-                                                <li>Item 5</li>
-                                            </ul>
+                                            <span id="ressultsRestaurants">My Results</span>
                                         </div>
                                         <h3>Top Rated Dessert Spots</h3>
                                         <div id="desserts">
-                                            <h5>If requested, dessert spots results will go here.</h5>
-                                            <ul>
-                                                <li>Item 1</li>
-                                                <li>Item 2</li>
-                                                <li>Item 3</li>
-                                                <li>Item 4</li>
-                                                <li>Item 5</li>
-
-                                            </ul>
+                                            <span id="resultsDeserts">My Results</span>
                                         </div>
                                         <h3>Movies Nearby</h3>
                                         <div id="movies">
                                             <table class="table table-sm table-hover" id='movie-table'>
                                                 <thead>
-                                                  <tr>
-                                                    <th scope="col">Title</th>
-                                                    <th scope="col">Movie Details</th>
-                                                    <th scope="col">Theatre</th>
-                                                    <th scope="col">Show Times</th>
-                                                    
-                                                  </tr>
+                                                    <tr>
+                                                        <th scope="col">Title</th>
+                                                        <th scope="col">Movie Details</th>
+                                                        <th scope="col">Theatre</th>
+                                                        <th scope="col">Show Times</th>
+
+                                                    </tr>
                                                 </thead>
                                                 <tbody>
                                                 </tbody>
-                                              </table>
-                                            <!-- <h5>If requested, movie results will go here.</h5>
-
-                                            <ul id="moviesoutput">
-                                                <li>Item 1</li>
-                                                <li>Item 2</li>
-                                                <li>Item 3</li>
-                                                <li>Item 4</li>
-                                            </ul> -->
+                                            </table>
                                         </div>
                                         <h3>Local Attractions</h3>
                                         <div id="attractions">
-                                            <h5>If requested, local attractions results will go here.</h5>
-                                            <ul>
-                                                <li>Item 1</li>
-                                                <li>Item 2</li>
-                                            </ul>
+                                            <span id="resultsAttractions">My Results</span>
                                         </div>
                                         <h3>Sunrise/Sunset</h3>
                                         <div id="sunrise_sunset">
-                                            <h5>Sunrise and sunset info here.</h5>
+                                            <span id="resultsSunrise">My Results</span>
                                         </div>
                                         <h3>Weather</h3>
                                         <div id="weather">
-                                            <h5>Today's Weather results will go here.</h5>
+                                            <span id="resultsWeather">My Results</span>
                                         </div>
                                         <h3>Forecast</h3>
                                         <div id="forecast">
-                                            <h5>Forecast results will go here.</h5>
-                                            <ul>
-                                            </ul>
+                                            <span id="resultsForecast">My Results</span>
                                         </div>
                                     </div>
                                 </p>
@@ -250,16 +221,17 @@
                                     <div class="text-primary text-center">
                                         <button type="button" id="history" class="btn btn-primary btn-md btn-block"
                                             data-toggle="modal" data-target="#historyModal">Date in History</button>
-                                        <button type="button" id="movies" class="btn btn-primary btn-md btn-block">Movie
-                                            Reviews</button>
-                                        <button type="button" id="books" class="btn btn-primary btn-md btn-block">Book
-                                            Reviews</button>
+                                        <button type="button" id="movies" class="btn btn-primary btn-md btn-block"
+                                            data-toggle="modal" data-target="#moviesModal">Movie Reviews</button>
+                                        <button type="button" id="books" class="btn btn-primary btn-md btn-block"
+                                            data-toggle="modal" data-target="#booksModal">Book Reviews</button>
                                         <p></p>
                                         <h5 class="card-title text-center text-primary ">Nervous?</h5>
                                         <p class="card-text">
                                             <button type="button" id="jokes" class="btn btn-dark btn-md btn-block"
-                                            data-toggle="modal" data-target="#jokeModal">Joke of the Day</button>
-                                            <button type="button" id="quotes" class="btn btn-dark btn-md btn-block" data-toggle="modal" data-target="#quotesModal">Quote of the Day</button>
+                                                data-toggle="modal" data-target="#jokeModal">Joke of the Day</button>
+                                            <button type="button" id="quotes" class="btn btn-dark btn-md btn-block"
+                                                data-toggle="modal" data-target="#quotesModal">Quote of the Day</button>
                                     </div>
                                 </p>
                             </div>
@@ -303,7 +275,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header bg-info text-white font-weight-bold">
-                        <h5 class="modal-title" id="booksModalLabel">Date Day in History</h5>
+                        <h5 class="modal-title" id="booksModalLabel">Book Reviews</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -324,7 +296,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header bg-info text-white font-weight-bold">
-                        <h5 class="modal-title" id="moviesModalLabel">Date Day in History</h5>
+                        <h5 class="modal-title" id="moviesModalLabel">Movie Reviews</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -391,7 +363,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         type="text/javascript"></script>
     <!--Moment JS file -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <!--Firebase JS files-->
     <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js" type="text/javascript"></script>
     <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js" type="text/javascript"></script>
