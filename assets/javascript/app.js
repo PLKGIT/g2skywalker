@@ -346,10 +346,30 @@ $(document).ready(function () {
 
         // Will update movies in UI
         updateMovies(needMovies);
-        dessertShops(needDessert);
+        // dessertShops(needDessert);
+        restaurant();
 
     });
 
+    //calling function  for restaurant latitude and longitude for Restaurant call..
+    function restaurant() {
+        var convAPIkey = "c833b0a3e4104de495176d7252219568";
+        var convQueryURL = "https://api.opencagedata.com/geocode/v1/json?q=" + userPlace + "&key=" + convAPIkey + "&language=en&pretty=1"
+
+        $.ajax({
+            url: convQueryURL,
+            method: "GET"
+        })
+            .then(function (response) {
+                latitude = response.results[0].geometry.lat;
+                longitude = response.results[0].geometry.lng;
+                // console.log("-----testdirection----");
+                // console.log(latitude);
+                // console.log(longitude);
+
+                restaurantHelper(latitude, longitude);
+            });
+    }
     // Get Results Data
     //-------------------------------------------
     //-------------------------------------------
@@ -552,16 +572,21 @@ $(document).ready(function () {
     // Restaurants API Data
     //-------------------------------------------
     // --------------TO DO------------------   
-    function dessertShops() {
+    function restaurantHelper(lat, longi) {
+
+        console.log(">>>>>> Inside Restaurant>>>>>");
+        console.log(lat);
+        console.log(longi);
 
         var apiKey = " d0782c26de92e778b76dcefa06a8ea95";
         $.ajax({
-            url: "https://developers.zomato.com/api/v2.1/search?q=desserts" + "&lat=" + latitude + "&lon=" + longitude,
+            url: "https://developers.zomato.com/api/v2.1/search?" + "&lat=" + latitude + "&lon=" + longitude,
 
             method: "GET",
             headers: { "user-key": apiKey },
 
         }).then(function (response) {
+            console.log("-----Test restaurant----");
             console.log(response);
         })
 
