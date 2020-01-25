@@ -360,21 +360,20 @@ $(document).ready(function () {
     //Update database based on Record Key and Call App Functions
 
 
-    function updateDatabase() {
+    async function updateDatabase() {
 
         // Get longitude and latitude from userPlace
 
         var convAPIkey = "c833b0a3e4104de495176d7252219568";
         var convQueryURL = "https://api.opencagedata.com/geocode/v1/json?countrycode=us&q=" + userPlace + "&key=" + convAPIkey + "&language=en&pretty=1"
 
-        $.ajax({
+        await $.ajax({
             type: "GET",
             url: convQueryURL,
             datatype: "json",
-            async: false,
             success: function (response) {
                 latitude = response.results[0].geometry.lat;
-                longitude = response.results[0].geometry.lng
+                longitude = response.results[0].geometry.lng;
                 console.log("Internal to Function: " + latitude + " , " + longitude);
             }
         });
@@ -439,7 +438,20 @@ $(document).ready(function () {
 
             .then(function (response) {
 
-                console.log(response.results);
+                var sunrise = response.results.sunrise;
+                var sunset = response.results.sunset;
+
+                var hrs = -(new Date().getTimezoneOffset() / 60);
+
+                console.log(moment(sunset, 'HH:mm A').add(hrs, 'hours').format("HH:mm A"))
+                var sunsetLocal = moment(sunset, 'HH:mm A').add(hrs, 'hours').format("HH:mm A");
+
+                console.log(moment(sunrise, 'HH:mm A').add(hrs, 'hours').format("HH:mm A"))
+                var sunriseLocal = moment(sunrise, 'HH:mm A').add(hrs, 'hours').format("HH:mm A");
+
+                $("#resultsSunrise").empty();
+                $("#resultsSunrise").html("<br>Sunrise: " + sunriseLocal + "<br> Sunset: " + sunsetLocal);
+
 
             });
 
@@ -457,7 +469,7 @@ $(document).ready(function () {
 
         } else {
 
-            weatherQueryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + userPlace + "&appid=" + weatherAPIKey;
+            weatherQueryURL = "https://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&appid=" + weatherAPIKey;
 
         }
 
@@ -537,7 +549,7 @@ $(document).ready(function () {
 
         } else {
 
-            forecastQueryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + userPlace + "&appid=" + forecastAPIKey;
+            forecastQueryURL = "https://api.openweathermap.org/data/2.5/forecast?lat=" + latitude + "&lon=" + longitude + "&appid=" + forecastAPIKey;
 
         }
         $.ajax({
