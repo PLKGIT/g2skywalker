@@ -95,6 +95,14 @@ $(document).ready(function () {
     //-------------------------------------------
     //-------------------------------------------
 
+    $("#restauranttest").hide();
+    $("#restaurant-table").hide(); 
+    $("#desserttest").hide();
+    $("#moviestest").hide();
+    $("#sunrisetest").hide();
+    $("#weathertest").hide();
+    $("#forecasttest").hide();
+
 
     // On Submit
     //-------------------------------------------
@@ -430,7 +438,7 @@ $(document).ready(function () {
     function sunset() {
 
         //var sunQueryURL = "https://api.sunrise-sunset.org/json?lat=" + latitude + "&lng=" + longitude; 
-
+        $("#sunrisetest").show();
 
         $.ajax({
             url: "https://api.sunrise-sunset.org/json?lat=" + latitude + "&lng=" + longitude,
@@ -459,6 +467,8 @@ $(document).ready(function () {
     }
 
     function weather() {
+        $("#weathertest").show();
+
 
         var weatherAPIKey = "166a433c57516f51dfab1f7edaed8413";
 
@@ -540,6 +550,7 @@ $(document).ready(function () {
     }
 
     function forecast() {
+        $("#forecasttest").show();
         var forecastAPIKey = "166a433c57516f51dfab1f7edaed8413";
 
         var forecastQueryURL = "";
@@ -627,16 +638,18 @@ $(document).ready(function () {
     // Restaurants API Data
     //-------------------------------------------
     // --------------TO DO------------------   
-    
+
     // Pull and store data 
     // Cycle through the remaining optional checkboxes (dessert, movies, attractions)
     // Call the appropriate function
     // If none checked, call the Return Results function
 
-     
+
 
     function restaurantUpdate(needRestaurant) {
         if (needRestaurant) {
+            $("#restauranttest").show();
+            $("#restaurant-table").show(); 
             var apiKey = " d0782c26de92e778b76dcefa06a8ea95";
             $.ajax({
                 url: "https://developers.zomato.com/api/v2.1/search?" + "&lat=" + latitude + "&lon=" + longitude,
@@ -653,7 +666,7 @@ $(document).ready(function () {
                     var name = results.restaurants[i].restaurant.name;
                     var details = results.restaurants[i].restaurant.url;
                     var aTag = $("<a>")
-                    aTag.attr("target","_blank")
+                    aTag.attr("target", "_blank")
                     aTag.attr("class", "restLink")
                     aTag.attr("href", details).text(details);
                     var cuisines = results.restaurants[i].restaurant.cuisines;
@@ -673,44 +686,45 @@ $(document).ready(function () {
     // Dessert Spots API Data
     //-------------------------------------------
     // --------------TO DO------------------  
-    function dessertsUpdate(needDessert){
-        if (needDessert){
-    var apiKey = " d0782c26de92e778b76dcefa06a8ea95";
-    $.ajax({
-        url: "https://developers.zomato.com/api/v2.1/search?q=desserts" + "&lat=" + latitude + "&lon=" + longitude,
-    
-        method:"GET",
-        headers: { "user-key": apiKey},
-    
-    }).then(function(response){
-    
-        console.log(response);
-        var results = response;
-        console.log(results);
-        console.log("------Test----");
-        console.log(results.restaurants[0].restaurant.name);
-        for (let i = 0; i<results.restaurants.length; i++){
-        //     console.log("###titleonly####");
-        //    console.log(results.restaurants[i].restaurant.name);
-        //    console.log(results.restaurants[i].restaurant.location);
-        //    console.log(results.restaurants[i].restaurant.highlights);
-           var name = results.restaurants[i].restaurant.name;
-           var location = results.restaurants[i].restaurant.location.address;
-           var timings = results.restaurants[i].restaurant.timings;
-          
-           var newRow = $("<tr>").append(
-               $("<td>").text(name),
-                $("<td>").text(location),
-                    $("<td>").text(timings)
-                       
-           );
-           $("#desserts-table > tbody").append(newRow);
-        // //    console.log("!!!!!!LOCATION!!!!");
-        // //    console.log(results.restaurants[i].restaurant.location);
+    function dessertsUpdate(needDessert) {
+        if (needDessert) {
+            $("#desserttest").show();
+            var apiKey = " d0782c26de92e778b76dcefa06a8ea95";
+            $.ajax({
+                url: "https://developers.zomato.com/api/v2.1/search?q=desserts" + "&lat=" + latitude + "&lon=" + longitude,
+
+                method: "GET",
+                headers: { "user-key": apiKey },
+
+            }).then(function (response) {
+
+                console.log(response);
+                var results = response;
+                console.log(results);
+                console.log("------Test----");
+                console.log(results.restaurants[0].restaurant.name);
+                for (let i = 0; i < results.restaurants.length; i++) {
+                    //     console.log("###titleonly####");
+                    //    console.log(results.restaurants[i].restaurant.name);
+                    //    console.log(results.restaurants[i].restaurant.location);
+                    //    console.log(results.restaurants[i].restaurant.highlights);
+                    var name = results.restaurants[i].restaurant.name;
+                    var location = results.restaurants[i].restaurant.location.address;
+                    var timings = results.restaurants[i].restaurant.timings;
+
+                    var newRow = $("<tr>").append(
+                        $("<td>").text(name),
+                        $("<td>").text(location),
+                        $("<td>").text(timings)
+
+                    );
+                    $("#desserts-table > tbody").append(newRow);
+                    // //    console.log("!!!!!!LOCATION!!!!");
+                    // //    console.log(results.restaurants[i].restaurant.location);
+                }
+
+            })
         }
-    
-    })  
-}
     }
 
     // Movies API Data
@@ -722,6 +736,7 @@ $(document).ready(function () {
 
     function updateMovies(needMovies) {
         if (needMovies) {
+            $("#moviestest").show();
             var apiKey = "wgkpzjdk25tfwrybxqvrtv2p";
             var queryURL = "http://data.tmsapi.com/v1.1/movies/showings?startDate=" + dateYear + "-" + dateMonth + "-" + dateDay + "&zip=" + userPlace + "&api_key=" + apiKey;
             $.ajax({
