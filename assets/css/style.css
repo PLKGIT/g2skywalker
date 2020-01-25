@@ -98,3 +98,14 @@ text-align: center;
   font-style: italic;
   align-content: center;
 }
+
+#movie-table {
+  font-size: 10px;
+}
+
+
+#message {
+  font-size: 22px;
+  font-weight: 400;
+  color: red;
+}
