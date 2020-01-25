@@ -92,17 +92,13 @@
                                                             <option value="">Select...</option>
                                                             <option value="city">City, State</option>
                                                             <option value="zip" selected>Zip</option>
-                                                            <option value="map">Map</option>
                                                         </select>
                                                     </div>
                                                     <span id="invalid_source"></span>
                                                 </div>
                                             </div>
                                             <div class="col-2">
-                                                <div class="form-group text-primary">
-                                                    <img src="assets/images/map_icon.png" class="text-center"
-                                                        width="30px">
-                                                </div>
+                                                <button type="button" id="map_it" class="btn btn-warning btn-md font-weight-bold text-dark">Map It</button>
                                             </div>
                                         </div>
 
@@ -115,7 +111,7 @@
                                                     <input class="form-check-input" type="checkbox" id="needRestaurant"
                                                         checked>
                                                     <label class="form-check-label"
-                                                        for="needRestaurant">Restaurant</label>
+                                                        for="needRestaurant">Restaurants</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="checkbox" id="needDessert">
@@ -126,18 +122,14 @@
                                                     <input class="form-check-input" type="checkbox" id="needMovies">
                                                     <label class="form-check-label" for="needMovies">Movies</label>
                                                 </div>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="checkbox"
-                                                        id="needAttractions">
-                                                    <label class="form-check-label" for="needAttractions">Local
-                                                        Attractions</label>
-                                                </div>
-                                                <span id="invalid_options"></span>
+                                                <br><span id="invalid_options"></span>
+                                                <p></p>
                                             </div>
+
                                             <div class="form-row">
                                                 <div class="col-12">
-                                                    <button type="submit" class="btn btn-md btn-info btn-block"
-                                                        id="submit">Submit</button>
+                                                    <button type="submit" class="btn btn-md btn-primary"
+                                                        id="submit">Submit</button> <div id="exit" class="btn btn-outline-primary btn-md text-right">Exit and Delete My Record</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -158,42 +150,16 @@
                                 RESULTS
                             </div>
                             <div class="card-body">
-                                <h5 class="card-title text-center text-primary"><span id="dater">"USER'S"</span>
-                                    Results...</h5>
+                                <h5 class="card-title text-center text-primary"> <span class="text-center text-danger font-weight-bold" id="msg"></span></h5>
                                 <p class="card-text text-center">
                                     <div id="accordion">
-
-                                        <h3>Top Rated Restaurants</h3>
+                                        <h3>Restaurants</h3>
                                         <div id="restaurants">
-                                            <table class="table table-sm table-hover" id='restaurant-table'>
-                                                <thead>
-                                                  <tr>
-                                                    <th scope="col">Name</th>
-                                                    <th scope="col">Cuisines</th>
-                                                    <th scope="col">More Details</th>
-                                                   
-                                                    
-                                                  </tr>
-                                                </thead>
-                                                <tbody>
-                                                </tbody>
-                                              </table>
+                                            <span id="ressultsRestaurants"></span>
                                         </div>
-                                        <h3>Top Rated Dessert Spots</h3>
+                                        <h3>Dessert Spots</h3>
                                         <div id="desserts">
-                                            <table class="table table-sm table-hover" id='desserts-table'>
-                                                <thead>
-                                                  <tr>
-                                                    <th scope="col">Name</th>
-                                                    <th scope="col">Address</th>
-                                                    <th scope="col">Timing</th>
-                                                   
-                                                    
-                                                  </tr>
-                                                </thead>
-                                                <tbody>
-                                                </tbody>
-                                              </table>
+                                            <span id="resultsDeserts"></span>
                                         </div>
                                         <h3>Movies Nearby</h3>
                                         <div id="movies">
@@ -211,21 +177,17 @@
                                                 </tbody>
                                             </table>
                                         </div>
-                                        <h3>Local Attractions</h3>
-                                        <div id="attractions">
-                                            <span id="resultsAttractions">My Results</span>
-                                        </div>
                                         <h3>Sunrise/Sunset</h3>
                                         <div id="sunrise_sunset">
-                                            <span id="resultsSunrise">My Results</span>
+                                            <span id="resultsSunrise"></span>
                                         </div>
                                         <h3>Weather</h3>
                                         <div id="weather">
-                                            <span id="resultsWeather">My Results</span>
+                                            <span id="resultsWeather"></span>
                                         </div>
                                         <h3>Forecast</h3>
                                         <div id="forecast">
-                                            <span id="resultsForecast">My Results</span>
+                                            <span id="resultsForecast"></span>
                                         </div>
                                     </div>
                                 </p>
@@ -283,7 +245,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <span id="resultsHistory">Please close this modal and select a date.<span>
+                        <span id="resultsHistory"><span>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
