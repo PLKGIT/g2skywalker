@@ -181,7 +181,7 @@ $(document).ready(function () {
         // Get longitude and latitude
 
         var convAPIkey = "c833b0a3e4104de495176d7252219568";
-        var convQueryURL = "https://api.opencagedata.com/geocode/v1/json?q=" + userPlace + "&key=" + convAPIkey + "&language=en&pretty=1"
+        var convQueryURL = "https://api.opencagedata.com/geocode/v1/json?countrycode=us&q=" + userPlace + "&key=" + convAPIkey + "&language=en&pretty=1"
 
         $.ajax({
             type: "GET",
@@ -190,7 +190,7 @@ $(document).ready(function () {
             async: false,
             success: function(response){
                 latitude = response.results[0].geometry.lat;
-                longitude = response.results[0].geometry.lng
+                longitude = response.results[0].geometry.lng;
                 console.log("Internal to Function: " + latitude + " , " + longitude);                
             }
         });
@@ -347,31 +347,32 @@ $(document).ready(function () {
         // Will update movies in UI
         updateMovies(needMovies);
         // dessertShops(needDessert);
-        restaurant();
+        // restaurant();
         dessertShops(needDessert);
+        restaurantUpdate(needRestaurant);
 
     });
 
     // latitude and longitude for Restaurant call..
-    function restaurant() {
-        var convAPIkey = "c833b0a3e4104de495176d7252219568";
-        var convQueryURL = "https://api.opencagedata.com/geocode/v1/json?q=" + userPlace + "&key=" + convAPIkey + "&language=en&pretty=1"
+    // function restaurant() {
+    //     var convAPIkey = "c833b0a3e4104de495176d7252219568";
+    //     var convQueryURL = "https://api.opencagedata.com/geocode/v1/json?q=" + userPlace + "&key=" + convAPIkey + "&language=en&pretty=1"
 
-        $.ajax({
-            url: convQueryURL,
-            method: "GET"
-        })
-            .then(function (response) {
-                latitude = response.results[0].geometry.lat;
-                longitude = response.results[0].geometry.lng;
-                // console.log("-----testdirection----");
-                // console.log(latitude);
-                // console.log(longitude);
+    //     $.ajax({
+    //         url: convQueryURL,
+    //         method: "GET"
+    //     })
+    //         .then(function (response) {
+    //             latitude = response.results[0].geometry.lat;
+    //             longitude = response.results[0].geometry.lng;
+    //             // console.log("-----testdirection----");
+    //             // console.log(latitude);
+    //             // console.log(longitude);
 
-                restaurantHelper(latitude, longitude);
+    //             restaurantHelper(latitude, longitude);
                 
-            });
-    }
+    //         });
+    // }
     // Get Results Data
     //-------------------------------------------
     //-------------------------------------------
@@ -574,24 +575,53 @@ $(document).ready(function () {
     // Restaurants API Data
     //-------------------------------------------
     // --------------TO DO------------------   
-    function restaurantHelper(lat, longi) {
+    // function restaurantHelper(lat, longi) {
 
-        console.log(">>>>>> Inside Restaurant>>>>>");
-        console.log(lat);
-        console.log(longi);
+    //     console.log(">>>>>> Inside Restaurant>>>>>");
+    //     console.log(lat);
+    //     console.log(longi);
 
+    //     var apiKey = " d0782c26de92e778b76dcefa06a8ea95";
+    //     $.ajax({
+    //         url: "https://developers.zomato.com/api/v2.1/search?" + "&lat=" + latitude + "&lon=" + longitude,
+
+    //         method: "GET",
+    //         headers: { "user-key": apiKey },
+
+    //     }).then(function (response) {
+    //         console.log("-----Test restaurant----");
+    //         console.log(response);
+    //     })
+
+    // }
+    function restaurantUpdate(needRestaurant){
         var apiKey = " d0782c26de92e778b76dcefa06a8ea95";
         $.ajax({
             url: "https://developers.zomato.com/api/v2.1/search?" + "&lat=" + latitude + "&lon=" + longitude,
-
-            method: "GET",
-            headers: { "user-key": apiKey },
-
-        }).then(function (response) {
-            console.log("-----Test restaurant----");
+            method:"GET",
+            headers: { "user-key": apiKey},
+        }) .then(function(response){
+            console.log("-----restUpdate----");
             console.log(response);
-        })
+            var results = response;
+            for (let i = 0; i<results.restaurants.length; i++){
+                // console.log(">>>TITLE>>>>");
+                // console.log(results.restaurants[i].restaurant.name);
+                
+                var name = results.restaurants[i].restaurant.name;
+                var cuisines = results.restuarants[i].restaurant.cuisines;
+                var details = results.restauransts[i].restaurant.url;
+                var aTag = $("<a>").attr("href" , details).text(details);
+                var newRow = $("<tr>").append(
+                    $("<td>").text(name),
+                    $("<td>").text(cuisines),
+                    $("<td>").append(aTag)
 
+                );
+                $("#restaurant-table > tbody").append(newRow);
+            }
+
+        })  
     }
     // Pull and store data 
     // Cycle through the remaining optional checkboxes (dessert, movies, attractions)
@@ -602,8 +632,7 @@ $(document).ready(function () {
     //-------------------------------------------
     // --------------TO DO------------------   
     function dessertShops(needDessert){
-    var latitude =37.765205
-    var longitude = -122.241638
+    if(needDessert){
     var apiKey = " d0782c26de92e778b76dcefa06a8ea95";
 $.ajax({
     url: "https://developers.zomato.com/api/v2.1/search?q=desserts" + "&lat=" + latitude + "&lon=" + longitude,
@@ -643,6 +672,7 @@ $.ajax({
 }
 })
     }
+}
 
 
     // Pull and store data 
@@ -659,6 +689,7 @@ $.ajax({
 
 
     function updateMovies(needMovies) {
+        if(needMovies){
         var apiKey = "wgkpzjdk25tfwrybxqvrtv2p";
         var queryURL = "http://data.tmsapi.com/v1.1/movies/showings?startDate=" + dateYear + "-" + dateMonth + "-" + dateDay + "&zip=" + userPlace + "&api_key=" + apiKey;
         $.ajax({
@@ -672,10 +703,11 @@ $.ajax({
             for (let i = 0; i < resultsMovies.length; i++) {
                 // console.log(resultsMovies[i]);
                 var title = resultsMovies[i].title;
-                var moviDetails = resultsMovies[i].officialUrl;
+                var details = resultsMovies[i].officialUrl;
+                var aTag = $("<a>").attr("href", details).text(details);
                 var newRow = $("<tr>").append(
                     $("<td>").text(title),
-                    $("<td>").text(moviDetails)
+                    $("<td>").append(aTag)
                 );
                 $("#movie-table > tbody").append(newRow);
 
@@ -706,6 +738,7 @@ $.ajax({
             // }
         });
     }
+}
 
 
     // Attractions API Data
