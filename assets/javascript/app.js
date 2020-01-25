@@ -78,13 +78,9 @@ $(document).ready(function () {
     var longitude;
     var latitude;
 
-    // Results Variables or Pull from Database
+    // User Message Variables
     //-------------------------------------------
-    var resultsWeather;
-    var resultsRestaurants;
-    var resultsDessertSpots;
-    var resultsMovies;
-    var resultsAttractions;
+    var welcomeMsg = "<p class='h3'>Need help planning that special date your partner will never forget?</p><p class='h3 text-dark'>Let us create your very own!</h3>";
 
     // Application Logic
     //-------------------------------------------
@@ -95,13 +91,14 @@ $(document).ready(function () {
     //-------------------------------------------
     //-------------------------------------------
 
-    $("#restauranttest").hide();
-    $("#restaurant-table").hide(); 
-    $("#desserttest").hide();
-    $("#moviestest").hide();
-    $("#sunrisetest").hide();
-    $("#weathertest").hide();
-    $("#forecasttest").hide();
+    $("#message").html(welcomeMsg);
+    $("#restaurantvis").hide();
+    $("#restaurant-table").hide();
+    $("#dessertvis").hide();
+    $("#moviesvis").hide();
+    $("#sunrisevis").hide();
+    $("#weathervis").hide();
+    $("#forecastvis").hide();
 
 
     // On Submit
@@ -438,7 +435,7 @@ $(document).ready(function () {
     function sunset() {
 
         //var sunQueryURL = "https://api.sunrise-sunset.org/json?lat=" + latitude + "&lng=" + longitude; 
-        $("#sunrisetest").show();
+        $("#sunrisevis").show();
 
         $.ajax({
             url: "https://api.sunrise-sunset.org/json?lat=" + latitude + "&lng=" + longitude,
@@ -467,7 +464,7 @@ $(document).ready(function () {
     }
 
     function weather() {
-        $("#weathertest").show();
+        $("#weathervis").show();
 
 
         var weatherAPIKey = "166a433c57516f51dfab1f7edaed8413";
@@ -550,7 +547,7 @@ $(document).ready(function () {
     }
 
     function forecast() {
-        $("#forecasttest").show();
+        $("#forecastvis").show();
         var forecastAPIKey = "166a433c57516f51dfab1f7edaed8413";
 
         var forecastQueryURL = "";
@@ -648,8 +645,8 @@ $(document).ready(function () {
 
     function restaurantUpdate(needRestaurant) {
         if (needRestaurant) {
-            $("#restauranttest").show();
-            $("#restaurant-table").show(); 
+            $("#restaurantvis").show();
+            $("#restaurant-table").show();
             var apiKey = " d0782c26de92e778b76dcefa06a8ea95";
             $.ajax({
                 url: "https://developers.zomato.com/api/v2.1/search?" + "&lat=" + latitude + "&lon=" + longitude,
@@ -688,7 +685,7 @@ $(document).ready(function () {
     // --------------TO DO------------------  
     function dessertsUpdate(needDessert) {
         if (needDessert) {
-            $("#desserttest").show();
+            $("#dessertvis").show();
             var apiKey = " d0782c26de92e778b76dcefa06a8ea95";
             $.ajax({
                 url: "https://developers.zomato.com/api/v2.1/search?q=desserts" + "&lat=" + latitude + "&lon=" + longitude,
@@ -736,7 +733,7 @@ $(document).ready(function () {
 
     function updateMovies(needMovies) {
         if (needMovies) {
-            $("#moviestest").show();
+            $("#moviesvis").show();
             var apiKey = "wgkpzjdk25tfwrybxqvrtv2p";
             var queryURL = "http://data.tmsapi.com/v1.1/movies/showings?startDate=" + dateYear + "-" + dateMonth + "-" + dateDay + "&zip=" + userPlace + "&api_key=" + apiKey;
             $.ajax({
@@ -783,217 +780,277 @@ $(document).ready(function () {
         // Prevent default action on click
         event.preventDefault();
 
-        // Set error message
-        $("#resultsHistory").html("Please submit the form above with a valid date.");
+        if (userDate === "") {
 
+            // Set error message
+            $("#resultsHistory").html("Please submit the form above with a valid date.");
 
-        // Pull data from database
+        } else {
 
-        // Query record in database
+            getFacts();
+        };
 
-        var queryDB = firebase.database().ref();
-
-        queryDB.orderByChild("user").equalTo(userID).on("value", function (snapshot) {
-
-            // Before DB Call
-            // console.log("Pre-call Record Key and Date");
-            // console.log(userRecordKey);
-            // console.log(userDate);
-
-            snapshot.forEach(function (snapshot) {
-
-                // console.log("Post-call Record Key , Month, Day, and Date");
-                // console.log(snapshot.key);
-                // console.log(snapshot.child("date").val());
-                // console.log(snapshot.child("month").val());
-                // console.log(snapshot.child("day").val());
-
-                dateMonth = snapshot.child("month").val();
-                dateDay = snapshot.child("day").val();
-            });
-            // console.log("Outside call Month and Day");
-            // console.log(dateMonth);
-            // console.log(dateDay);
-
-            // AJAX Call with settings when Date Day in History Button Clicked
-            $.ajax({
-                url: "https://byabbe.se/on-this-day/" + dateMonth.replace(/^0+/, '') + "/" + dateDay.replace(/^0+/, '') + "/events.json",
-                data: {
-                    format: 'json'
-                },
-
-                // Error handling
-                error: function () {
-                    $("#resultsHistory").html("Please submit the form above with a valid date.");
-                },
-
-                // On success, display results in History modal
-                success: function (response) {
-                    $("#resultsHistory").empty();
-                    console.log(response);
-
-                    for (let i = 0; i < response.events.length; i++) {
-
-                        $("#resultsHistory").append("<p>" + response.events[i].year + ": " + response.events[i].description + "</p>");
-                    }
-                },
-                type: 'GET'
-            });
-
-        });
-
-
-
-        // console.log("Outside call Month and Day");
-        // console.log(dateMonth);
-        // console.log(dateDay);
-
-
-
-
-        // Help Data - return in modal
-        //-------------------------------------------
-        //-------------------------------------------
-
-
-        // Joke of the Day API Data
-        //-------------------------------------------
-        // Tested and Signed Off - 01/24/2020 PLK
-        //-------------------------------------------
-
-        // AJAX Call with settings when 'Joke of the Day' button clicked
-
-        $("#jokes").on("click", function (event) {
-
-            // Prevent default action on click
-            event.preventDefault();
-
-            // Query the data from the API
-            //-----Pulls the joke for the current day-------------
-
-            $.ajax({
-                url: "https://api.jokes.one/jod?category=jod",
-                data: {
-                    format: 'json'
-                },
-                // Error handling
-                error: function () {
-                    $("#resultsJokes").html("An error occurred, please try again.");
-                },
-                // On success, display results in Jokes modal
-                success: function (response) {
-                    $("#resultsJoke").html(response.contents.jokes[0].joke.text);
-                },
-                type: 'GET'
-            });
-
-        });
-
-        // Quote of the Day API Data
-        //-------------------------------------------
-        // Tested and Signed Off - 01/24/2020 PLK
-        //-------------------------------------------
-
-        // AJAX Call with settings when 'Quote of the Day' button clicked
-
-        $("#quotes").on("click", function (event) {
-
-            // Prevent default action on click
-            event.preventDefault();
-
-            // Query the data from the API
-            //-----Pulls the quote for the current day-------------
-
-            $.ajax({
-                url: "http://quotes.rest/qod.json",
-                data: {
-                    format: 'json'
-                },
-                // Error handling
-                error: function () {
-                    $("#resultsQuotes").html("An error occurred, please try again.");
-                },
-                // On success, display results in Quotes modal
-                success: function (response) {
-                    $("#resultsQuotes").html(response.contents.quotes[0].quote);
-                },
-                type: 'GET'
-            });
-
-        });
 
     });
 
 
-    $("#exit").click(function () {
 
-        // Delete record in database
-        console.log(userRecordKey);
+    // // Pull data from database
 
-        if (userID !== "") {
+    // // Query record in database
 
-            var deleteRef = database.ref(userRecordKey);
+    // var queryDB = firebase.database().ref();
 
-            function delAssets() {
-                deleteRef.set({});
-                console.log("Deleted: " + userRecordKey);
-            };
+    // queryDB.orderByChild("user").equalTo(userID).on("value", function (snapshot) {
 
-            delAssets();
+    //     // Before DB Call
+    //     // console.log("Pre-call Record Key and Date");
+    //     // console.log(userRecordKey);
+    //     // console.log(userDate);
 
-            window.open("goodbye.html", '_self');
+    //     snapshot.forEach(function (snapshot) {
 
-        } else {
-            window.open("goodbye.html", '_self');
+    //         // console.log("Post-call Record Key , Month, Day, and Date");
+    //         // console.log(snapshot.key);
+    //         // console.log(snapshot.child("date").val());
+    //         // console.log(snapshot.child("month").val());
+    //         // console.log(snapshot.child("day").val());
+
+    //         dateMonth = snapshot.child("month").val();
+    //         dateDay = snapshot.child("day").val();
+    //     });
+    //     // console.log("Outside call Month and Day");
+    //     // console.log(dateMonth);
+    //     // console.log(dateDay);
+
+    //     // AJAX Call with settings when Date Day in History Button Clicked
+    //     $.ajax({
+    //         url: "https://byabbe.se/on-this-day/" + dateMonth.replace(/^0+/, '') + "/" + dateDay.replace(/^0+/, '') + "/events.json",
+    //         data: {
+    //             format: 'json'
+    //         },
+
+    //         // Error handling
+    //         error: function () {
+    //             $("#resultsHistory").html("Please submit the form above with a valid date.");
+    //         },
+
+    //         // On success, display results in History modal
+    //         success: function (response) {
+    //             $("#resultsHistory").empty();
+    //             console.log(response);
+
+    //             for (let i = 0; i < response.events.length; i++) {
+
+    //                 $("#resultsHistory").append("<p>" + response.events[i].year + ": " + response.events[i].description + "</p>");
+    //             }
+    //         },
+    //         type: 'GET'
+    //     });
+
+
+// console.log("Outside call Month and Day");
+// console.log(dateMonth);
+// console.log(dateDay);
+
+
+
+
+// Help Data - return in modal
+//-------------------------------------------
+//-------------------------------------------
+
+
+// Joke of the Day API Data
+//-------------------------------------------
+// Tested and Signed Off - 01/24/2020 PLK
+//-------------------------------------------
+
+// AJAX Call with settings when 'Joke of the Day' button clicked
+
+$("#jokes").on("click", function (event) {
+
+    // Prevent default action on click
+    event.preventDefault();
+
+    // Query the data from the API
+    //-----Pulls the joke for the current day-------------
+
+    $.ajax({
+        url: "https://api.jokes.one/jod?category=jod",
+        data: {
+            format: 'json'
+        },
+        // Error handling
+        error: function () {
+            $("#resultsJokes").html("An error occurred, please try again.");
+        },
+        // On success, display results in Jokes modal
+        success: function (response) {
+            $("#resultsJoke").html(response.contents.jokes[0].joke.text);
+        },
+        type: 'GET'
+    });
+
+});
+
+// Quote of the Day API Data
+//-------------------------------------------
+// Tested and Signed Off - 01/24/2020 PLK
+//-------------------------------------------
+
+// AJAX Call with settings when 'Quote of the Day' button clicked
+
+$("#quotes").on("click", function (event) {
+
+    // Prevent default action on click
+    event.preventDefault();
+
+    // Query the data from the API
+    //-----Pulls the quote for the current day-------------
+
+    $.ajax({
+        url: "http://quotes.rest/qod.json",
+        data: {
+            format: 'json'
+        },
+        // Error handling
+        error: function () {
+            $("#resultsQuotes").html("An error occurred, please try again.");
+        },
+        // On success, display results in Quotes modal
+        success: function (response) {
+            $("#resultsQuotes").html(response.contents.quotes[0].quote);
+        },
+        type: 'GET'
+    });
+
+});
+
+
+
+$("#exit").click(function () {
+
+    // Delete record in database
+    console.log(userRecordKey);
+
+    if (userID !== "") {
+
+        var deleteRef = database.ref(userRecordKey);
+
+        function delAssets() {
+            deleteRef.set({});
+            console.log("Deleted: " + userRecordKey);
+        };
+
+        delAssets();
+
+        window.open("goodbye.html", '_self');
+
+    } else {
+        window.open("goodbye.html", '_self');
+    }
+
+})
+
+
+
+
+// Movie Reviews API Data
+//-------------------------------------------
+// Tested and Signed Off - __/__/2020 INITIALS
+//-------------------------------------------
+
+// --------------IN PROGRESS (Jyochsna) -----
+//----zipcode need to be retrieved from UI------
+
+// AJAX Call with settings when 'Movie Reviews' button clicked
+
+
+// Book Reviews API Data
+//-------------------------------------------
+// Tested and Signed Off - __/__/2020 INITIALS
+//-------------------------------------------
+
+// --------------TO DO------------------
+
+$("#books").on("click", function (event) {
+    var queryURL = "https://api.nytimes.com/svc/books/v3/reviews.json?author=Stephen+King&api-key=SVk93difMBPzCqu40AH1AV6vLslWr9hz";
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    }).then(function (response) {
+        console.log("!!!!!!");
+        console.log(response);
+
+        for (let i = 0; i < response.results.length; i++) {
+            // console.log("-----ABCD----")
+            // console.log(response.results[i].url)
+            var review = response.results[i].url;
+            var aTag = $("<a>")
+            aTag.attr("target", "_blank")
+            aTag.attr("class", "books-review")
+            aTag.attr("href", review).text(review);
+            $("#resultsBooks").html(aTag);
         }
 
     })
 
+})
 
 
+function getFacts() {
 
-    // Movie Reviews API Data
-    //-------------------------------------------
-    // Tested and Signed Off - __/__/2020 INITIALS
-    //-------------------------------------------
+    var queryDB = firebase.database().ref();
 
-    // --------------IN PROGRESS (Jyochsna) -----
-    //----zipcode need to be retrieved from UI------
+    queryDB.orderByChild("user").equalTo(userID).on("value", function (snapshot) {
 
-    // AJAX Call with settings when 'Movie Reviews' button clicked
+        // Before DB Call
+        // console.log("Pre-call Record Key and Date");
+        // console.log(userRecordKey);
+        // console.log(userDate);
 
+        snapshot.forEach(function (snapshot) {
 
-    // Book Reviews API Data
-    //-------------------------------------------
-    // Tested and Signed Off - __/__/2020 INITIALS
-    //-------------------------------------------
+            // console.log("Post-call Record Key , Month, Day, and Date");
+            // console.log(snapshot.key);
+            // console.log(snapshot.child("date").val());
+            // console.log(snapshot.child("month").val());
+            // console.log(snapshot.child("day").val());
 
-    // --------------TO DO------------------
+            dateMonth = snapshot.child("month").val();
+            dateDay = snapshot.child("day").val();
+        });
+        // console.log("Outside call Month and Day");
+        // console.log(dateMonth);
+        // console.log(dateDay);
 
-    $("#books").on("click", function (event) {
-        var queryURL = "https://api.nytimes.com/svc/books/v3/reviews.json?author=Stephen+King&api-key=SVk93difMBPzCqu40AH1AV6vLslWr9hz";
+        // AJAX Call with settings when Date Day in History Button Clicked
         $.ajax({
-            url: queryURL,
-            method: "GET"
-        }).then(function (response) {
-            console.log("!!!!!!");
-            console.log(response);
+            url: "https://byabbe.se/on-this-day/" + dateMonth.replace(/^0+/, '') + "/" + dateDay.replace(/^0+/, '') + "/events.json",
+            data: {
+                format: 'json'
+            },
 
-            for (let i = 0; i < response.results.length; i++) {
-                // console.log("-----ABCD----")
-                // console.log(response.results[i].url)
-                var review = response.results[i].url;
-                var aTag = $("<a>")
-                aTag.attr("target", "_blank")
-                aTag.attr("class", "books-review")
-                aTag.attr("href", review).text(review);
-                $("#resultsBooks").html(aTag);
-            }
+            // Error handling
+            error: function () {
+                $("#resultsHistory").html("Please submit the form above with a valid date.");
+            },
 
-        })
+            // On success, display results in History modal
+            success: function (response) {
+                $("#resultsHistory").empty();
+                console.log(response);
 
-    })
+                for (let i = 0; i < response.events.length; i++) {
 
+                    $("#resultsHistory").append("<p>" + response.events[i].year + ": " + response.events[i].description + "</p>");
+                }
+            },
+            type: 'GET'
+        });
+    });
+}
     // Return Results Data to DOM/Email
     //-------------------------------------------
     //-------------------------------------------
@@ -1015,7 +1072,6 @@ $(document).ready(function () {
 
     // If so, need user's email address
     // --------------TO DO------------------     
-
 
 
 });

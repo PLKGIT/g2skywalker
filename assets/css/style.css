@@ -37,9 +37,7 @@ header {
   left: 0;
   top: 0;
   width: 100%;
-  color: white;
-  text-align: center;
-  background: rgba(50, 7, 238, 0.5);
+  background: rgba(50, 7, 238, 0.75);
   padding: 1em 0;
   text-shadow: 2px 2px 4px #000000;
   margin-bottom: 50px;
@@ -76,11 +74,6 @@ footer a:hover {
   color: orangered;
 }
 
-form img {
-  vertical-align: baseline;
-}
-
-
 .anchorbutton{
 text-align: center;
   border-style: solid;
@@ -99,7 +92,7 @@ text-align: center;
   align-content: center;
 }
 
-#movie-table {
+#movie-table, #restaurant-table, #desserts-table {
   font-size: 10px;
 }
 
@@ -107,16 +100,17 @@ text-align: center;
 #message {
   font-size: 22px;
   font-weight: 400;
-  color: red;
-}
+  color: rgba(50, 7, 238);
+  }
+
 .restLink{
   color:rgb(218, 40, 63);
 }
 
 .restLink:visited{
-  color:blue;
+  color: rgba(50, 7, 238);
 }
 .books-review:visited{
-  color:blue;
+  color: rgba(50, 7, 238);
 
 }
