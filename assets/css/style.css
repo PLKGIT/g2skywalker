@@ -109,3 +109,14 @@ text-align: center;
   font-weight: 400;
   color: red;
 }
+.restLink{
+  color:rgb(218, 40, 63);
+}
+
+.restLink:visited{
+  color:blue;
+}
+.books-review:visited{
+  color:blue;
+
+}

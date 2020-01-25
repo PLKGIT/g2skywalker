@@ -412,7 +412,8 @@ $(document).ready(function () {
         weather();
         forecast();
         updateMovies(needMovies);
-        restaurantHelper(latitude, longitude);
+        restaurantUpdate(needRestaurant);
+        dessertsUpdate(needDessert);
     }
 
     // Get Results Data
@@ -614,33 +615,13 @@ $(document).ready(function () {
     // Restaurants API Data
     //-------------------------------------------
     // --------------TO DO------------------   
-    function restaurantHelper(latitude, longitude) {
-
-        console.log(">>>>>> Inside Restaurant>>>>>");
-        console.log(latitude);
-        console.log(longitude);
-
-        var apiKey = " d0782c26de92e778b76dcefa06a8ea95";
-        $.ajax({
-            url: "https://developers.zomato.com/api/v2.1/search?" + "&lat=" + latitude + "&lon=" + longitude,
-
-            method: "GET",
-            headers: { "user-key": apiKey },
-
-        }).then(function (response) {
-            console.log("-----Test restaurant----");
-            console.log(response);
-        })
-
-    }
+    
     // Pull and store data 
     // Cycle through the remaining optional checkboxes (dessert, movies, attractions)
     // Call the appropriate function
     // If none checked, call the Return Results function
 
-    // Dessert Spots API Data
-    //-------------------------------------------
-    // --------------TO DO------------------     
+     
 
     function restaurantUpdate(needRestaurant) {
         if (needRestaurant) {
@@ -659,7 +640,10 @@ $(document).ready(function () {
 
                     var name = results.restaurants[i].restaurant.name;
                     var details = results.restaurants[i].restaurant.url;
-                    var aTag = $("<a>").attr("href", details).text(details);
+                    var aTag = $("<a>")
+                    aTag.attr("target","_blank")
+                    aTag.attr("class", "restLink")
+                    aTag.attr("href", details).text(details);
                     var cuisines = results.restaurants[i].restaurant.cuisines;
                     var newRow = $("<tr>").append(
                         $("<td>").text(name),
@@ -674,7 +658,48 @@ $(document).ready(function () {
         }
     }
 
-
+    // Dessert Spots API Data
+    //-------------------------------------------
+    // --------------TO DO------------------  
+    function dessertsUpdate(needDessert){
+        if (needDessert){
+    var apiKey = " d0782c26de92e778b76dcefa06a8ea95";
+    $.ajax({
+        url: "https://developers.zomato.com/api/v2.1/search?q=desserts" + "&lat=" + latitude + "&lon=" + longitude,
+    
+        method:"GET",
+        headers: { "user-key": apiKey},
+    
+    }).then(function(response){
+    
+        console.log(response);
+        var results = response;
+        console.log(results);
+        console.log("------Test----");
+        console.log(results.restaurants[0].restaurant.name);
+        for (let i = 0; i<results.restaurants.length; i++){
+        //     console.log("###titleonly####");
+        //    console.log(results.restaurants[i].restaurant.name);
+        //    console.log(results.restaurants[i].restaurant.location);
+        //    console.log(results.restaurants[i].restaurant.highlights);
+           var name = results.restaurants[i].restaurant.name;
+           var location = results.restaurants[i].restaurant.location.address;
+           var timings = results.restaurants[i].restaurant.timings;
+          
+           var newRow = $("<tr>").append(
+               $("<td>").text(name),
+                $("<td>").text(location),
+                    $("<td>").text(timings)
+                       
+           );
+           $("#desserts-table > tbody").append(newRow);
+        // //    console.log("!!!!!!LOCATION!!!!");
+        // //    console.log(results.restaurants[i].restaurant.location);
+        }
+    
+    })  
+}
+    }
 
     // Movies API Data
     //-------------------------------------------
@@ -919,7 +944,7 @@ $(document).ready(function () {
     // --------------TO DO------------------
 
     $("#books").on("click", function (event) {
-        var queryURL = "https://api.nytimes.com/svc/books/v3/reviews.json?&api-key=SVk93difMBPzCqu40AH1AV6vLslWr9hz";
+        var queryURL = "https://api.nytimes.com/svc/books/v3/reviews.json?author=Stephen+King&api-key=SVk93difMBPzCqu40AH1AV6vLslWr9hz";
         $.ajax({
             url: queryURL,
             method: "GET"
@@ -931,7 +956,10 @@ $(document).ready(function () {
                 // console.log("-----ABCD----")
                 // console.log(response.results[i].url)
                 var review = response.results[i].url;
-                var aTag = $("<a>").attr("href", review).text(review);
+                var aTag = $("<a>")
+                aTag.attr("target", "_blank")
+                aTag.attr("class", "books-review")
+                aTag.attr("href", review).text(review);
                 $("#resultsBooks").html(aTag);
             }
 
