@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Rendezvous Date Night Planner</title>
+    <title>Rendez-vous Date Night Planner</title>
 
     <!--Google Fonts-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli|Roboto&display=swap">
@@ -22,7 +22,7 @@
 
 <body>
     <header>
-        <p class="h1 text-white text-center">Rendezvous</p>
+        <p class="h1 text-white text-center">Rendez-vous</p>
         <p class="h4 text-white text-center font-weight-light font-italic">Your Easy Date Night Planner!</p>
 
     </header>
@@ -38,8 +38,7 @@
                         <!--User Input via Form-->
                         <div class="card">
                             <div
-                                class="card-header text-white bg-primary text-center font-weight-bold align-items-center">
-                                DATE DETAILS
+                                class="card-header text-white bg-secondary text-center font-weight-bold align-items-center">DATE DETAILS
                             </div>
                             <div id="userInput" class="card-body text-left">
                                 <p class="card-text">
@@ -131,7 +130,7 @@
                                             <div class="form-row">
                                                 <div class="col-12">
                                                     <button type="submit" class="btn btn-md btn-primary"
-                                                        id="submit">Submit</button> <div id="exit" class="btn btn-outline-primary btn-md text-right">Exit and Delete My Record</div>
+                                                        id="submit">Submit</button> <div id="exit" class="btn btn-outline-primary btn-md">Exit and Delete My Record</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -149,12 +148,14 @@
                         <!--Results based on User Input-->
                         <div id="userResults" class="card h-100">
                             <div class="card-header text-white text-center font-weight-bold bg-info">
-                                RESULTS
+                                USER RESULTS
                             </div>
                             <div class="card-body">
                                 <h5 class="card-title text-center text-primary"> <span class="text-center font-weight-bold" id="message"></span></h5>
                                 <p class="card-text text-center">
                                     <div id="accordion">
+
+
                                         <h3 id="restaurantvis">Restaurants</h3>
                                         <div id="restaurants">
                                             <table class="table table-sm table-hover" id='restaurant-table'>
@@ -226,20 +227,19 @@
                         <!--User Help Options-->
                         <div id="userHelp" class="card h-100">
                             <div class="card-header text-white text-center font-weight-bold bg-info">
-                                HELP
+                                USER HELP
                             </div>
                             <div class="card-body">
-                                <h5 class="card-title text-primary text-center">Starters</h5>
+                                <h4 class="card-title text-primary text-center">Prompts</h4>
                                 <p class="card-text">
                                     <div class="text-primary text-center">
+                                        <button type="button" id="starters" class="btn btn-primary btn-md btn-block"
+                                            data-toggle="modal" data-target="#startersModal">Conversation Starters</button>
                                         <button type="button" id="history" class="btn btn-primary btn-md btn-block"
                                             data-toggle="modal" data-target="#historyModal">Date in History</button>
-                                        <button type="button" id="movies" class="btn btn-primary btn-md btn-block"
-                                            data-toggle="modal" data-target="#moviesModal">Movie Reviews</button>
-                                        <button type="button" id="books" class="btn btn-primary btn-md btn-block"
-                                            data-toggle="modal" data-target="#booksModal">Book Reviews</button>
+                                        
                                         <p></p>
-                                        <h5 class="card-title text-center text-primary ">Nervous?</h5>
+                                        <h4 class="card-title text-center text-primary ">Nervous?</h4>
                                         <p class="card-text">
                                             <button type="button" id="jokes" class="btn btn-dark btn-md btn-block"
                                                 data-toggle="modal" data-target="#jokeModal">Joke of the Day</button>
@@ -282,19 +282,20 @@
         </div>
     </modal1>
 
+    
     <modal2>
-        <div class="modal fade" id="booksModal" tabindex="-1" role="dialog" aria-labelledby="booksModalLabel"
+        <div class="modal fade" id="startersModal" tabindex="-1" role="dialog" aria-labelledby="startersModalLabel"
             aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header bg-info text-white font-weight-bold">
-                        <h5 class="modal-title" id="booksModalLabel">Book Reviews</h5>
+                        <h5 class="modal-title" id="startersModalLabel">Conversation Starters</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <span id="resultsBooks"><span>
+                        <span id="resultsStarters"><span>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -303,27 +304,6 @@
             </div>
         </div>
     </modal2>
-    <modal3>
-        <div class="modal fade" id="moviesModal" tabindex="-1" role="dialog" aria-labelledby="moviesModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header bg-info text-white font-weight-bold">
-                        <h5 class="modal-title" id="moviesModalLabel">Movie Reviews</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <span id="resultsMovies"><span>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </modal3>
 
     <modal4>
         <div class="modal fade" id="jokeModal" tabindex="-1" role="dialog" aria-labelledby="jokeModalLabel"
@@ -403,7 +383,8 @@
         // This uses the jQuery UI library to create an accordion effect to display user's results
         $(function () {
             $("#accordion").accordion({
-                heightStyle: "content"
+                // heightStyle: "content"
+                collapsible: true
             });
         });
 
