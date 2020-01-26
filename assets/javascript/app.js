@@ -397,8 +397,8 @@ $(document).ready(function () {
         });
 
         // Add User's Name to DOM
-        $("#msg").empty();
-        $("#msg").append(userName + " your results are below...");
+        $("#message").empty();
+        $("#message").append(userName + " your results are below...");
 
 
         // Call other APIs
@@ -751,7 +751,7 @@ $(document).ready(function () {
 
             // Call API
 
-            var apiKey = "wgkpzjdk25tfwrybxqvrtv2p";
+            var apiKey = "p8d678gus35c6ym5tygxw2g3";
             var queryURL = "http://data.tmsapi.com/v1.1/movies/showings?startDate=" + dateYear + "-" + dateMonth + "-" + dateDay + "&zip=" + userPlace + "&api_key=" + apiKey;
             $.ajax({
                 url: queryURL,
