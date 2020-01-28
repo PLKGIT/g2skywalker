@@ -133,7 +133,7 @@ Use: jQuery-based user interface interactions, effects, widgets, and themes. Use
 
 ### Other Tools
 
-**MeyerWeb**
+**MeyerWeb CSS Reset**
 https://meyerweb.com/eric/tools/css/reset/ 
 Use: Styles reset
 

@@ -756,7 +756,7 @@ $(document).ready(function () {
             // Sonal "p8d678gus35c6ym5tygxw2g3";
 
 
-            var queryURL = "http://data.tmsapi.com/v1.1/movies/showings?startDate=" + dateYear + "-" + dateMonth + "-" + dateDay + "&lat=" + latitude + "&lng=" + longitude + "&api_key=" + apiKey;
+            var queryURL = "https://data.tmsapi.com/v1.1/movies/showings?startDate=" + dateYear + "-" + dateMonth + "-" + dateDay + "&lat=" + latitude + "&lng=" + longitude + "&api_key=" + apiKey;
             $.ajax({
                 url: queryURL,
                 method: "GET"
@@ -893,7 +893,7 @@ $(document).ready(function () {
         //-----Pulls the quote for the current day-------------
 
         $.ajax({
-            url: "http://quotes.rest/qod.json",
+            url: "https://quotes.rest/qod.json",
             data: {
                 format: 'json'
             },
