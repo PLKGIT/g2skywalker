@@ -991,7 +991,7 @@ $(document).ready(function () {
             var deleteRef = database.ref(userRecordKey);
 
             function delAssets() {
-                deleteRef.set({});
+                deleteRef.remove();
                 console.log("Deleted: " + userRecordKey);
             };
 
