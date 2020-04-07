@@ -1,4 +1,4 @@
-# Group 2 (aka g2Skywalker) Project No. 1
+# Bootcamp Project No. 1 - Group 2 (aka g2Skywalker)
 
 ## Overview
 Use newly acquired skills and knowledge to build web application from scratch. Conceive and execute a design that solves a real-world problem by integrating data received from multiple server-side API requests.  Because you will be working collaboratively, you will implement feature and bug fixes using the git branch workflow and pull requests.
