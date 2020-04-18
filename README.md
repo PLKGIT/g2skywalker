@@ -1,29 +1,13 @@
-# Bootcamp Project No. 1 - Group 2 (aka g2Skywalker)
+# Rendez-vous - *Your Easy Date Night Planner*
 
 ## Overview
-Use newly acquired skills and knowledge to build web application from scratch. Conceive and execute a design that solves a real-world problem by integrating data received from multiple server-side API requests.  Because you will be working collaboratively, you will implement feature and bug fixes using the git branch workflow and pull requests.
+The Rendez-vous app is intended to help a person planning a date to create an unforgettable date night experience.  Target audience: inexperienced dater who needs help planning a date and/or is nervous about what to do.  We are providing a single location for date planning and preparation.
 
-### Due
-Monday, January 27, 2020
+The app from multiple application programming interfaces (APIs) to give the user comprehensive data, including geolocation information such as weather forecasts and restaurant ratings and suggestions as well as more personal support like conversation starters and inspirational quotes.
 
-## Project Details
+![](https://res.cloudinary.com/damplk/image/upload/v1580628276/portal/grp_project_01a_omcnyt.png)
 
-### Development Team 
-
-1. Sonal Bhoraniya
-2. Chantal Eshghipour
-3. Jyochsna Gongal
-4. Matthew Harris
-5. Pam Kelly
-
-### Project Title
-Rendez-vous
-*Your Easy Date Night Planner*
-
-### Description
-This app is intended to help a person planning a date to create an unforgettable date night experience.  Target audience: inexperienced dater who needs help planning a date and/or is nervous about what to do.  We are providing a single location for date planning and preparation.
-
-It will pull from multiple application programming interfaces (APIs) to give the user comprehensive data, including geolocation information such as weather forecasts and restaurant ratings and suggestions as well as more personal support like conversation starters and inspirational quotes.
+![](https://res.cloudinary.com/damplk/image/upload/v1580628276/portal/grp_project_01b_deidi8.png)
 
 ### Team Assets
 
@@ -79,20 +63,6 @@ https://developers.zomato.com/api
 Use: Curated restaurant information
 
 
-### Pending APIs
-
-**Google Maps and Google Places API**
-Use: display a map for user to select a location for user’s event.
-
-**Redline API via RapidAPI**
-https://rapidapi.com/redline/api/RedLine%20Zipcode
-Use: forward geocoding (get latitude/longitude from a zip code).
-
-**SmartyStreets API**
-https://smartystreets.com/
-Use: zip code validation.
-
-
 ### Technologies, Libraries, and Tools Used**
 
 **GitHub**
@@ -140,10 +110,20 @@ Use: Styles reset
 **Regular Expressions (RegEx)**
 Use: Data validation
 
-## Completed Project URLs
-### Github Repository
-[Github Link](https://github.com/PLKGIT/g2skywalker) at https://github.com/PLKGIT/g2skywalker.
-### Deployed App
+## Development Details
+
+### Development Team 
+
+1. Sonal Bhoraniya
+2. Chantal Eshghipour
+3. Jyochsna Gongal
+4. Matthew Harris
+5. Pam Kelly
+
+### GitHub Repository
+[GitHub](https://github.com/PLKGIT/g2skywalker) at https://github.com/PLKGIT/g2skywalker
+
+### Deployed Application
 [Date Night Planner](https://plkgit.github.io/g2skywalker/) deployed at https://plkgit.github.io/g2skywalker/.
 
-Copyright &copy; 2020 | g2Skywalker Development Team
+Copyright &copy; 2020 | Sonal Bhoraniya, Chantal Eshghipour, Jyochsna Gongal, Matthew Harris, Pam Kelly
