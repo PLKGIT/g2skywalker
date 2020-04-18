@@ -63,7 +63,7 @@ https://developers.zomato.com/api
 Use: Curated restaurant information
 
 
-### Technologies, Libraries, and Tools Used**
+### Technologies, Libraries, and Tools Used
 
 **GitHub**
 https://github.com/PLKGIT/g2skywalker 
