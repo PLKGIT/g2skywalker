@@ -38,106 +38,106 @@
                         <!--User Input via Form-->
                         <div class="card">
                             <div
-                                class="card-header text-white bg-secondary text-center font-weight-bold align-items-center">DATE DETAILS
+                                class="card-header text-white bg-secondary text-center font-weight-bold align-items-center">
+                                DATE DETAILS
                             </div>
                             <div id="userInput" class="card-body">
                                 <p class="card-text">
-                                    <form id="details">
+                                <form id="details">
+                                    <div class="form-row">
+                                        <div class="col-lg-1">
+                                            <div class="form-group text-primary"></div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 ">
+                                            <div class="form-group text-primary">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text bg-dark text-white">First
+                                                        Name</span>
+                                                    <input type="text" class="form-control border border-muted"
+                                                        id="userName" placeholder="John/Jane">
+                                                </div>
+                                                <span id="invalid_name"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-sm-5">
+                                            <div class="form-group text-primary">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text bg-dark text-white">Date
+                                                        Day</span>
+                                                    <input type="text" class="form-control border border-muted"
+                                                        id="datePicker" readonly="readonly" placeholder="01/01/2020">
+                                                    <input type="hidden" class="form-control border border-muted"
+                                                        id="userDate">
+                                                </div>
+                                                <span id="invalid_date"></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-lg-1">
+                                            <div class="form-group text-primary"></div>
+                                        </div>
+                                        <div class="col-sm-6 col-lg-4">
+                                            <div class="form-group text-primary">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text bg-dark text-white">Location</span>
+                                                    <input type="text" class="form-control border border-muted"
+                                                        id="userPlace" placeholder="Zipcode OR City, State">
+                                                </div>
+                                                <span id="invalid_place"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-5 col-lg-3">
+                                            <div class="form-group text-primary">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text bg-dark text-white">Source</span>
+                                                    <select class="custom-select" id="source">
+                                                        <option value="">Select...</option>
+                                                        <option value="city">City, State</option>
+                                                        <option value="zip" selected>Zip</option>
+                                                    </select>
+                                                </div>
+                                                <span id="invalid_source"></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-row text-primary">
+                                        <div class="col-12 text-center">
+                                            <label for="checkboxes" class="text-info font-weight-bold">I Need:
+                                                &nbsp;
+                                            </label>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="checkbox" id="needRestaurant"
+                                                    checked>
+                                                <label class="form-check-label" for="needRestaurant">Restaurants</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="checkbox" id="needDessert">
+                                                <label class="form-check-label" for="needDessert">Dessert
+                                                    Spots</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="checkbox" id="needMovies">
+                                                <label class="form-check-label" for="needMovies">Movies</label>
+                                            </div>
+                                            <br><span id="invalid_options"></span>
+                                            <p></p>
+                                        </div>
+
                                         <div class="form-row">
-                                            <div class="col-lg-1">
-                                                <div class="form-group text-primary"></div>
-                                            </div>
-                                            <div class="col-lg-6 col-sm-6 ">
-                                                <div class="form-group text-primary">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text bg-dark text-white">First
-                                                            Name</span>
-                                                        <input type="text" class="form-control border border-muted"
-                                                            id="userName" placeholder="John/Jane">
-                                                    </div>
-                                                    <span id="invalid_name"></span>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4 col-sm-5">
-                                                <div class="form-group text-primary">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text bg-dark text-white">Date
-                                                            Day</span>
-                                                        <input type="text" class="form-control border border-muted"
-                                                            id="datePicker" readonly="readonly"
-                                                            placeholder="01/01/2020">
-                                                        <input type="hidden" class="form-control border border-muted"
-                                                            id="userDate">
-                                                    </div>
-                                                    <span id="invalid_date"></span>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div class="form-row">
-                                            <div class="col-lg-1">
-                                                <div class="form-group text-primary"></div>
-                                            </div>
-                                            <div class="col-sm-6 col-lg-4">
-                                                <div class="form-group text-primary">
-                                                    <div class="input-group-prepend">
-                                                        <span
-                                                            class="input-group-text bg-dark text-white">Location</span>
-                                                        <input type="text" class="form-control border border-muted"
-                                                            id="userPlace" placeholder="Zipcode OR City, State">
-                                                    </div>
-                                                    <span id="invalid_place"></span>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-5 col-lg-3">
-                                                <div class="form-group text-primary">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text bg-dark text-white">Source</span>
-                                                        <select class="custom-select" id="source">
-                                                            <option value="">Select...</option>
-                                                            <option value="city">City, State</option>
-                                                            <option value="zip" selected>Zip</option>
-                                                        </select>
-                                                    </div>
-                                                    <span id="invalid_source"></span>
-                                                </div>
-                                            </div>
-                                            <!-- <div class="col-2">
-                                                <button type="button" id="map_it" class="btn btn-warning btn-md font-weight-bold text-dark">Map It</button>
-                                            </div> -->
-                                        </div>
-
-                                        <div class="form-row text-primary">
-                                            <div class="col-12 text-center">
-                                                <label for="checkboxes" class="text-info font-weight-bold">I Need:
-                                                    &nbsp;
-                                                </label>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="checkbox" id="needRestaurant"
-                                                        checked>
-                                                    <label class="form-check-label"
-                                                        for="needRestaurant">Restaurants</label>
-                                                </div>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="checkbox" id="needDessert">
-                                                    <label class="form-check-label" for="needDessert">Dessert
-                                                        Spots</label>
-                                                </div>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="checkbox" id="needMovies">
-                                                    <label class="form-check-label" for="needMovies">Movies</label>
-                                                </div>
-                                                <br><span id="invalid_options"></span>
-                                                <p></p>
-                                            </div>
-
-                                            <div class="form-row">
-                                                <div class="col">
-                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="submit" class="btn btn-md btn-primary" id="submit">Submit</button> &nbsp;&nbsp;&nbsp;&nbsp;<div id="exit" class="btn btn-outline-primary btn-md">Exit and Delete My Record</div>
+                                            <div class="col">
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button
+                                                    type="submit" class="btn btn-md btn-primary"
+                                                    id="submit">Submit</button> &nbsp;&nbsp;&nbsp;&nbsp;<div id="exit"
+                                                    class="btn btn-outline-primary btn-md">Exit and Delete My Record
                                                 </div>
                                             </div>
                                         </div>
-                                    </form>
+                                    </div>
+                                </form>
                                 </p>
                             </div>
                         </div>
@@ -154,73 +154,74 @@
                                 USER RESULTS
                             </div>
                             <div class="card-body">
-                                <h5 class="card-title text-center text-primary"> <span class="text-center font-weight-bold" id="message"></span></h5>
+                                <h5 class="card-title text-center text-primary"> <span
+                                        class="text-center font-weight-bold" id="message"></span></h5>
                                 <p class="card-text text-center">
-                                    <div id="accordion">
+                                <div id="accordion">
 
 
-                                        <h3 id="restaurantvis">Restaurants</h3>
-                                        <div id="restaurants">
-                                            <table class="table table-sm table-hover" id='restaurant-table'>
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col">Name</th>
-                                                        <th scope="col">Cuisines</th>
-                                                        <th scope="col">Details</th>
-                                                        
+                                    <h3 id="restaurantvis">Restaurants</h3>
+                                    <div id="restaurants">
+                                        <table class="table table-sm table-hover" id='restaurant-table'>
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Name</th>
+                                                    <th scope="col">Cuisines</th>
+                                                    <th scope="col">Details</th>
 
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <h3 id="dessertvis">Dessert Spots</h3>
-                                        <div id="desserts">
-                                            <table class="table table-sm table-hover" id='desserts-table'>
-                                                <thead>
-                                                    <tr>
 
-                                                        <th scope="col">Name</th>
-                                                        <th scope="col">Address</th>
-                                                        <th scope="col">Timings</th>
-                                                        
-
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <h3 id="moviesvis">Movies Nearby</h3>
-                                        <div id="movies">
-                                            <table class="table table-sm table-hover" id='movie-table'>
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col">Title</th>
-                                                        <th scope="col">Movie Details</th>
-                                                        <th scope="col">Theatre</th>
-                                                        <th scope="col">Show Times</th>
-
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <h3 id="sunrisevis">Sunrise/Sunset</h3>
-                                        <div id="sunrise_sunset">
-                                            <span id="resultsSunrise"></span>
-                                        </div>
-                                        <h3 id="weathervis">Weather</h3>
-                                        <div id="weather">
-                                            <span id="resultsWeather"></span>
-                                        </div>
-                                        <h3 id="forecastvis">Forecast</h3>
-                                        <div id="forecast">
-                                            <span id="resultsForecast"></span>
-                                        </div>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
                                     </div>
+                                    <h3 id="dessertvis">Dessert Spots</h3>
+                                    <div id="desserts">
+                                        <table class="table table-sm table-hover" id='desserts-table'>
+                                            <thead>
+                                                <tr>
+
+                                                    <th scope="col">Name</th>
+                                                    <th scope="col">Address</th>
+                                                    <th scope="col">Timings</th>
+
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <h3 id="moviesvis">Movies Nearby</h3>
+                                    <div id="movies">
+                                        <table class="table table-sm table-hover" id='movie-table'>
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Title</th>
+                                                    <th scope="col">Movie Details</th>
+                                                    <th scope="col">Theatre</th>
+                                                    <th scope="col">Show Times</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <h3 id="sunrisevis">Sunrise/Sunset</h3>
+                                    <div id="sunrise_sunset">
+                                        <span id="resultsSunrise"></span>
+                                    </div>
+                                    <h3 id="weathervis">Weather</h3>
+                                    <div id="weather">
+                                        <span id="resultsWeather"></span>
+                                    </div>
+                                    <h3 id="forecastvis">Forecast</h3>
+                                    <div id="forecast">
+                                        <span id="resultsForecast"></span>
+                                    </div>
+                                </div>
                                 </p>
                             </div>
                         </div>
@@ -235,20 +236,20 @@
                             <div class="card-body">
                                 <h4 class="card-title text-primary text-center">Prompts</h4>
                                 <p class="card-text">
-                                    <div class="text-primary text-center">
-                                        <button type="button" id="starters" class="btn btn-primary btn-md btn-block"
-                                            data-toggle="modal" data-target="#startersModal">Conversation Starters</button>
-                                        <button type="button" id="history" class="btn btn-primary btn-md btn-block"
-                                            data-toggle="modal" data-target="#historyModal">Date in History</button>
-                                        
-                                        <p></p>
-                                        <h4 class="card-title text-center text-primary ">Nervous?</h4>
-                                        <p class="card-text">
-                                            <button type="button" id="jokes" class="btn btn-dark btn-md btn-block"
-                                                data-toggle="modal" data-target="#jokeModal">Joke of the Day</button>
-                                            <button type="button" id="quotes" class="btn btn-dark btn-md btn-block"
-                                                data-toggle="modal" data-target="#quotesModal">Quote of the Day</button>
-                                    </div>
+                                <div class="text-primary text-center">
+                                    <button type="button" id="starters" class="btn btn-primary btn-md btn-block"
+                                        data-toggle="modal" data-target="#startersModal">Conversation Starters</button>
+                                    <button type="button" id="history" class="btn btn-primary btn-md btn-block"
+                                        data-toggle="modal" data-target="#historyModal">Date in History</button>
+
+                                    <p></p>
+                                    <h4 class="card-title text-center text-primary ">Nervous?</h4>
+                                    <p class="card-text">
+                                        <button type="button" id="jokes" class="btn btn-dark btn-md btn-block"
+                                            data-toggle="modal" data-target="#jokeModal">Joke of the Day</button>
+                                        <button type="button" id="quotes" class="btn btn-dark btn-md btn-block"
+                                            data-toggle="modal" data-target="#quotesModal">Quote of the Day</button>
+                                </div>
                                 </p>
                             </div>
                         </div>
@@ -307,7 +308,7 @@
         </div>
     </modal2>
 
-    
+
     <modal3>
         <div class="modal fade" id="startersModal" tabindex="-1" role="dialog" aria-labelledby="startersModalLabel"
             aria-hidden="true">
